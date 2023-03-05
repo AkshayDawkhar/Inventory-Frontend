@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyAppDemo());
+}
+
+class MyAppDemo extends StatefulWidget {
+  const MyAppDemo({Key? key}) : super(key: key);
+
+  @override
+  State<MyAppDemo> createState() => _MyAppDemoState();
+}
+
+class _MyAppDemoState extends State<MyAppDemo> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+        routerConfig: GoRouter(routes: [
+      GoRoute(
+          path: '/me',
+          builder: (BuildContext context, GoRouterState state) {
+            return const MyHomePage(title: 'ME');
+          },
+          routes:[GoRoute(
+              path: 'you',
+              builder: (BuildContext context, GoRouterState state) {
+                return const MyHomePage(title: 'YOU');
+              },
+          ),]
+          ),
+    ]));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -95,12 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
           child: GridView.builder(
-              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: w < 550 ?1:2,
-                childAspectRatio: 3/2 ,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: w < 550 ? 1 : 2,
+                childAspectRatio: 3 / 2,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
-
               ),
               addRepaintBoundaries: true,
               itemCount: items.length,
@@ -109,7 +137,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height,
-                  color:  w < 600 ?Colors.blue[items[index]] : Colors.red[items[index]] ,
+                  color: w < 600
+                      ? Colors.blue[items[index]]
+                      : Colors.red[items[index]],
                   child: Text('$w'),
                 );
               })
