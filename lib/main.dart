@@ -18,14 +18,16 @@ class _MyAppDemoState extends State<MyAppDemo> {
     return MaterialApp.router(
         routerConfig: GoRouter(routes: [
       GoRoute(
-          path: '/me',
+          path: '/',
           builder: (BuildContext context, GoRouterState state) {
             return const MyHomePage(title: 'ME');
           },
-          routes:[GoRoute(
-              path: 'you',
+          routes:[
+            GoRoute(
+              path: 'you/:me',
               builder: (BuildContext context, GoRouterState state) {
-                return const MyHomePage(title: 'YOU');
+                String me = state.params['me']!;
+                return  MyHomePage(title: me);
               },
           ),]
           ),
