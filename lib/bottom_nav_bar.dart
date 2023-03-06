@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-Widget BottomNavbBar = BottomNavigationBar(
-  items: const [
-     BottomNavigationBarItem(
-      icon: Icon(Icons.public),
-      label: '',
-    ),  BottomNavigationBarItem(
-        icon: Icon(Icons.build), label: 'builds')
-     ,BottomNavigationBarItem(icon: Icon(Icons.public), label: 'public')
-  ],
-);
+Widget BottomNavbBar(int w) => BottomNavigationBar(
+      items: [
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.public),
+          label: '',
+        ),
+        w < 600
+            ? const BottomNavigationBarItem(
+                icon: Icon(Icons.build), label: 'builds')
+            : const BottomNavigationBarItem(
+                icon: Icon(Icons.public), label: 'public'),
+        const BottomNavigationBarItem(icon: Icon(Icons.public), label: 'public')
+      ],
+    );
