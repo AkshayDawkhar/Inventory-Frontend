@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'routes.dart';
+import 'bottom_nav_bar.dart';
 
 class MyAppDemo extends StatefulWidget {
   const MyAppDemo({Key? key}) : super(key: key);
@@ -11,15 +12,13 @@ class MyAppDemo extends StatefulWidget {
 class _MyAppDemoState extends State<MyAppDemo> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-        routerConfig: goRouter
-    );
+    return MaterialApp.router(routerConfig: goRouter);
   }
 }
 
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -56,14 +55,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     return Scaffold(
+      bottomNavigationBar: BottomNavbBar(w as int),
+      drawer: w < 600
+          ? const Drawer(
+              child: Text('hi'),
+            )
+          : const Drawer(
+              child: Text('no hi'),
+            ),
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
           child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: w < 550 ? 1 : 2,
-                childAspectRatio: 3 / 2,
+                crossAxisCount: w < 750 ? 1 : 2,
+                childAspectRatio: 4 / 2,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
               ),
@@ -79,9 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       : Colors.red[items[index]],
                   child: Text('$w'),
                 );
-              })
-
-      ),
+              })),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
