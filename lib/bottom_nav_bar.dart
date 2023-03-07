@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget BottomNavbBar(int w) => BottomNavigationBar(
+Widget BottomNavbBar(double w) => BottomNavigationBar(
       items: [
         const BottomNavigationBarItem(
           icon: Icon(Icons.public),

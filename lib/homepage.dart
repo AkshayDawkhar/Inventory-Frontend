@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: BottomNavbBar(w as int),
+      bottomNavigationBar: BottomNavbBar(w),
       drawer: w < 600
           ? const Drawer(
               child: Text('hi'),
