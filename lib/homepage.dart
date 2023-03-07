@@ -97,14 +97,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       bottomNavigationBar: BottomNavbBar(context,a),
+      // endDrawer: Drawer(child: Icon(Icons.send_time_extension),),
       drawer: w < 600
-          ? const Drawer(
-              child: Text('hi'),
+          ?  Drawer(
+              backgroundColor: Color.fromARGB(12, 204, 15, 15),
+              child:Text('hii'),
             )
           : const Drawer(
               child: Text('no hi'),
             ),
       appBar: AppBar(
+        actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.person))],
         title: Text(widget.title),
       ),
       body: Center(
@@ -133,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: const Icon(Icons.remove),
+        child: const Icon(Icons.handyman),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
