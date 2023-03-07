@@ -48,14 +48,55 @@ class _MyHomePageState extends State<MyHomePage> {
     400,
     300,
     200,
-    100
+    100,900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    800,
+    700,
+    600,
+    500,
+    400,
+    300,
+    200,
+    100,900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    800,
+    700,
+    600,
+    500,
+    400,
+    300,
+    200,
+    100,900,
+    900,
+    900,
+    900,
+    900,
+    900,
+    800,
+    700,
+    600,
+    500,
+    400,
+    300,
+    200,
+    100,
   ];
 
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
+    int a =1;
+
     return Scaffold(
-      bottomNavigationBar: BottomNavbBar(w),
+      bottomNavigationBar: BottomNavbBar(context,a),
       drawer: w < 600
           ? const Drawer(
               child: Text('hi'),
@@ -75,16 +116,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSpacing: 10,
               ),
               addRepaintBoundaries: true,
+              addAutomaticKeepAlives: true,
               itemCount: items.length,
               padding: EdgeInsets.all(12),
               itemBuilder: (BuildContext context, int index) {
+              print(index);
                 return Container(
                   alignment: Alignment.center,
                   height: MediaQuery.of(context).size.height,
                   color: w < 600
                       ? Colors.blue[items[index]]
                       : Colors.red[items[index]],
-                  child: Text('$w'),
+                  child: Text('${DateTime.now()}'),
                 );
               })),
       floatingActionButton: FloatingActionButton(
