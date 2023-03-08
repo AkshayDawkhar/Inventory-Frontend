@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavbBar(context, a),
       // endDrawer: Drawer(child: Icon(Icons.send_time_extension),),
       drawer: w < 600
-          ? Drawer(
+          ? const Drawer(
         child: Text('hii'),
       )
           : const Drawer(
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // Will shows on top of all items, it can be a logo or a Title text
             // title: Image.asset('assets/images/easy_sidemenu.png'),
             // Will show on bottom of SideMenu when displayMode was SideMenuDisplayMode.open
-            footer: Text('demo'),
+            footer: const Text('demo'),
             // Notify when display mode changed
             onDisplayModeChanged: (mode) {
               print(mode);
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     addRepaintBoundaries: true,
                     addAutomaticKeepAlives: true,
                     itemCount: items.length,
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     itemBuilder: (BuildContext context, int index) {
                       print(index);
                       return Container(
@@ -207,7 +207,7 @@ Widget body(BuildContext context, final widget) =>
               addRepaintBoundaries: true,
               addAutomaticKeepAlives: true,
               itemCount: items.length,
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               itemBuilder: (BuildContext context, int index) {
                 print(index);
                 return Container(
