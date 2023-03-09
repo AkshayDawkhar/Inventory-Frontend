@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -132,58 +134,70 @@ myBottomNavBar(BuildContext context) => BottomNavigationBar(
       ],
     );
 
-var myContainer = Container(
-  decoration: BoxDecoration(
-      color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
-  alignment: Alignment.center,
-  child: Row(
-    children: [
-      Expanded(
-          flex: 4,
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'))),
-          )),
-      Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              children: const [
-                Text(
-                  '12',
-                  style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'InStock',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-            // SizedBox(height: 12,),
-            Column(
-              children: [
-                Text(
-                  '19',
-                  style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Building',
-                  style: TextStyle(fontSize: 20),
-                )
-              ],
-            )
-          ],
+myContainer(bool mobile,int index)=>
+  Container(
+    decoration: BoxDecoration(
+        color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
+    alignment: Alignment.center,
+    child: Row(
+      children: [
+        Expanded(
+            flex: 4,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                      image: NetworkImage(
+                          'https://flutterdesk.com/wp-content/uploads/2022/05/Flutter-Card-Widget.jpg'),
+                      fit: BoxFit.fill)),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomRight, colors: [
+                      Colors.black.withOpacity(0.6),
+                      Colors.white.withOpacity(0.0),
+                    ])),
+              ),
+            )),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: const [
+                  Text(
+                    '12',
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'InStock',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+              // SizedBox(height: 12,),
+              Column(
+                children: const [
+                  Text(
+                    '19',
+                    style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Building',
+                    style: TextStyle(fontSize: 20),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
-      ),
-    ],
-  ),
-);
+      ],
+    ),
+  );

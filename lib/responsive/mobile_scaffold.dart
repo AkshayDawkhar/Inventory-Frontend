@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import '/constants.dart';
 
@@ -27,8 +29,9 @@ class _MobileScaffoldState extends State<MobileScaffold> {
               itemCount: items.length,
               padding: const EdgeInsets.all(12),
               itemBuilder: (BuildContext context, int index) {
-                return myContainer;
-              })),
+                return myContainer(false,index);
+              })
+      ),
       
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
