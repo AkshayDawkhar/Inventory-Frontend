@@ -136,5 +136,54 @@ var myContainer = Container(
   decoration: BoxDecoration(
       color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
   alignment: Alignment.center,
-  child: Text('${DateTime.now()}'),
+  child: Row(
+    children: [
+      Expanded(
+          flex: 4,
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(
+                        'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'))),
+          )),
+      Expanded(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: const [
+                Text(
+                  '12',
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'InStock',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            // SizedBox(height: 12,),
+            Column(
+              children: [
+                Text(
+                  '19',
+                  style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Building',
+                  style: TextStyle(fontSize: 20),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    ],
+  ),
 );
