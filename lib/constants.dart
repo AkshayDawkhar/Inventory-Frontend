@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:numeral/numeral.dart';
 
 List<int> items = <int>[
   900,
@@ -134,70 +135,120 @@ myBottomNavBar(BuildContext context) => BottomNavigationBar(
       ],
     );
 
-myContainer(bool mobile,int index)=>
-  Container(
-    decoration: BoxDecoration(
-        color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
-    alignment: Alignment.center,
-    child: Row(
-      children: [
-        Expanded(
-            flex: 4,
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://flutterdesk.com/wp-content/uploads/2022/05/Flutter-Card-Widget.jpg'),
-                      fit: BoxFit.fill)),
+myContainer(bool mobile, int index) => Container(
+      decoration: BoxDecoration(
+          color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
+      alignment: Alignment.center,
+      child: Row(
+        children: [
+          Expanded(
+              flex: 4,
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomRight, colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.white.withOpacity(0.0),
-                    ])),
-              ),
-            )),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: const [
-                  Text(
-                    '12',
-                    style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                          'https://static.wixstatic.com/media/256076_15225f5ed7654366b363bb856eaf6b62~mv2.jpg/v1/fill/w_520,h_420,al_c,q_85,usm_0.66_1.00_0.01/256076_15225f5ed7654366b363bb856eaf6b62~mv2.webp'),
+                      fit: BoxFit.cover,
+                    )),
+                alignment: Alignment.center,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.6),
+                          Colors.black.withOpacity(0.0),
+                        ],
+                        begin: Alignment.bottomRight,
+                      )),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'InStock',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: mobile ? 15 : 20),
+                              ),
+                              Text(
+                                Numeral(items[index]).format(),
+                                // overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: mobile ? 40 : 50,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          // SizedBox(height: 12,),
+                          Column(
+                            children: [
+                              Text(
+                                'Building',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: mobile ? 15 : 20),
+                              ),
+                              Text(
+                                '$index',
+                                style: TextStyle(
+                                    fontSize: mobile ? 40 : 50,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    'InStock',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
-              ),
-              // SizedBox(height: 12,),
-              Column(
-                children: const [
-                  Text(
-                    '19',
-                    style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Building',
-                    style: TextStyle(fontSize: 20),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
+                ),
+              )),
+          // Expanded(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //     children: [
+          //       Column(
+          //         children: [
+          //           Text(
+          //             Numeral(items[index] + 1500000).format(),
+          //             // overflow: TextOverflow.ellipsis,
+          //             style: TextStyle(
+          //                 fontSize: mobile ? 40 : 50,
+          //                 color: Colors.white,
+          //                 fontWeight: FontWeight.bold),
+          //           ),
+          //           Text(
+          //             'InStock',
+          //             style: TextStyle(fontSize: mobile ? 15 : 20),
+          //           ),
+          //         ],
+          //       ),
+          //       // SizedBox(height: 12,),
+          //       Column(
+          //         children: [
+          //           Text(
+          //             '$index',
+          //             style: TextStyle(
+          //                 fontSize: mobile ? 40 : 50,
+          //                 color: Colors.white,
+          //                 fontWeight: FontWeight.bold),
+          //           ),
+          //           Text(
+          //             'Building',
+          //             style: TextStyle(fontSize: mobile ? 15 : 20),
+          //           )
+          //         ],
+          //       )
+          //     ],
+          //   ),
+          // ),
+        ],
+      ),
+    );
