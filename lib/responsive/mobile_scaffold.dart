@@ -13,7 +13,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: myDrawer,
-      appBar: myAppBar,
+      appBar: myAppBar('HOME'),
       body: Center(
           child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

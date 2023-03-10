@@ -62,7 +62,8 @@ List<int> items = <int>[
 ];
 var myBackgroundColor = Colors.white;
 
-AppBar myAppBar = AppBar(
+myAppBar(String title) => AppBar(
+  title: Text(title),
   backgroundColor: Colors.blueGrey[700],
 );
 
@@ -135,8 +136,7 @@ myBottomNavBar(BuildContext context) => BottomNavigationBar(
 
 myContainer(BuildContext context, bool mobile, int index) => InkWell(
       onTap: () {
-        print(index);
-        GoRouter.of(context).go('/product/$index');
+        GoRouter.of(context).push('/product/$index');
       },
       child: Container(
         decoration: BoxDecoration(

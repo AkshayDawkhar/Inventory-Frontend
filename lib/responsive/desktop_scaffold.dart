@@ -11,7 +11,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar,
+      appBar: myAppBar('home'),
       body: Row(
         children: [
           myDrawer,

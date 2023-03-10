@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'responsive/responsive_layout.dart';
 import 'responsive/desktop_scaffold.dart';
 import 'responsive/mobile_scaffold.dart';
+import 'responsive/mobile_product_page.dart';
+import 'responsive/desktop_product_page.dart';
 
 GoRouter goRouter = GoRouter(routes: [
   GoRoute(
@@ -12,4 +14,12 @@ GoRouter goRouter = GoRouter(routes: [
             desktopScaffold: const DesktopScaffold(),
             mobileScaffold: const MobileScaffold());
       }),
+  GoRoute(
+      path: '/product/:me',
+      builder: (BuildContext context, GoRouterState state) {
+        String me = state.params['me']!;
+        return ResponsiveLayout(
+            desktopScaffold: DesktopProductPage(title: me),
+            mobileScaffold: MobileProductPage());
+      })
 ]);
