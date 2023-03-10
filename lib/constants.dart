@@ -160,18 +160,28 @@ myContainer(bool mobile, int index) => Container(
                           Colors.black.withOpacity(0.6),
                           Colors.black.withOpacity(0.0),
                         ],
-                        begin: Alignment.bottomRight,
+                        begin: Alignment.centerLeft,
                       )),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                       Text(
+                          'my product',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: mobile ? 30:40,
+                              fontWeight: FontWeight.bold),
+                        ),
+
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Column(
+                          Row(
+                            // crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                'InStock',
+                                'InStock: ',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: mobile ? 15 : 20),
@@ -187,10 +197,10 @@ myContainer(bool mobile, int index) => Container(
                             ],
                           ),
                           // SizedBox(height: 12,),
-                          Column(
+                          Row(
                             children: [
                               Text(
-                                'Building',
+                                'Building: ',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: mobile ? 15 : 20),
