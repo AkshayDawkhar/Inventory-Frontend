@@ -30,6 +30,6 @@ GoRouter goRouter = GoRouter(routes: [
         String me = state.params['me']!;
         return ResponsiveLayout(
             desktopScaffold: DesktopProductPage(title: me),
-            mobileScaffold: MobileProductPage());
+            mobileScaffold: MobileProductPage(title: me,));
       })
 ]);
