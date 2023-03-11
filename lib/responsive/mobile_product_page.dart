@@ -7,8 +7,8 @@ class MobileProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar('PRODUCT $title'),
+    return Center(
+      child: Text(title),
     );
   }
 }

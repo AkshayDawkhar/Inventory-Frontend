@@ -6,8 +6,6 @@ class DesktopProductPage extends StatelessWidget {
   final title;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar('product $title'),
-    );
+    return Center(child: Text(title),);
   }
 }
