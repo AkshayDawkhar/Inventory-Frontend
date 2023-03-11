@@ -71,9 +71,11 @@ var myDrawer = Drawer(
   // backgroundColor: myBackgroundColor,
   child: SingleChildScrollView(
     child: Column(
-      children: const [
+      children:  [
         DrawerHeader(child: Icon(Icons.favorite)),
         ListTile(
+          onTap: (){},
+          // hoverColor: Colors.red,
           leading: Icon(Icons.home),
           title: Text('H O M E'),
         ),
