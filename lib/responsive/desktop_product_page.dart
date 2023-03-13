@@ -127,8 +127,16 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        child: Text('data ${index+1}'),
-                        color: Colors.red,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 3,
+                                color: index == 3 ? Colors.blue : Colors.red),
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            image: const DecorationImage(
+                                image: NetworkImage(
+                                    'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                fit: BoxFit.fill)),
+                        child: Text('data ${index + 1}'),
                       ),
                     );
                   }),
@@ -153,10 +161,13 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            backgroundColor: Colors.blueGrey,
-            icon: Icon(Icons.add,size: 30,),
-            label: Text('Build'),
-            ));
+          onPressed: () {},
+          backgroundColor: Colors.blueGrey,
+          icon: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          label: Text('Build'),
+        ));
   }
 }
