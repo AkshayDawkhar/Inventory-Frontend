@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '/constants.dart';
+import 'package:http/http.dart' as http;
 
 class DesktopProductPage2 extends StatefulWidget {
   const DesktopProductPage2({Key? key}) : super(key: key);
@@ -116,7 +119,10 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                   ],
                 ),
               ),
-
+              const Text(
+                'Required',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               GridView.builder(
                   itemCount: 20,
                   shrinkWrap: true,
@@ -161,7 +167,17 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () async {
+            final url = Uri.parse('http://127.0.0.1:8000/product/');
+            final a = await http.get(url);
+            print(a.statusCode);
+            final json = jsonDecode(a.body);
+            print(json.runtimeType);
+            List aq = json;
+            aq.forEach((element) {
+              print(element["dname"]);
+            });
+          },
           backgroundColor: Colors.blueGrey,
           icon: Icon(
             Icons.add,

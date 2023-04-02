@@ -67,6 +67,7 @@ myAppBar(String title) => AppBar(
   backgroundColor: Colors.blueGrey[700],
 );
 
+String s = 'http://127.0.0.1:8000/product/';
 var myDrawer = Drawer(
   // backgroundColor: myBackgroundColor,
   child: SingleChildScrollView(
