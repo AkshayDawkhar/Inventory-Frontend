@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:inventory/helper.dart';
 
 class DesktopProductPage2 extends StatefulWidget {
   const DesktopProductPage2({Key? key}) : super(key: key);
@@ -167,16 +169,10 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            final url = Uri.parse('http://127.0.0.1:8000/product/');
-            final a = await http.get(url);
-            print(a.statusCode);
-            final json = jsonDecode(a.body);
-            print(json.runtimeType);
-            List aq = json;
-            aq.forEach((element) {
-              print(element["dname"]);
-            });
+          onPressed: () async{
+            List a = await HttpHelper().fetchItems();
+            // sleep(const Duration(seconds: 3));
+            print(a);
           },
           backgroundColor: Colors.blueGrey,
           icon: Icon(

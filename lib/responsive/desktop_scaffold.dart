@@ -12,6 +12,12 @@ class DesktopScaffold extends StatefulWidget {
 
 class _DesktopScaffoldState extends State<DesktopScaffold> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('object');
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar('home'),

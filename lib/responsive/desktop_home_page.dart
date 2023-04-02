@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '/constants.dart';
+import 'package:inventory/helper.dart';
+// Future<List<Map>> items = HttpHelper.fetchItems();
 
 Widget desktopHomepageBody = Center(
     child: GridView.builder(
@@ -11,7 +13,7 @@ Widget desktopHomepageBody = Center(
         ),
         addRepaintBoundaries: true,
         addAutomaticKeepAlives: true,
-        itemCount: items.length,
+        itemCount: 2,
         padding: const EdgeInsets.all(12),
         itemBuilder: (BuildContext context, int index) {
           return myContainer(context, false, index);
