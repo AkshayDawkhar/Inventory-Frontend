@@ -13,14 +13,14 @@ GoRouter goRouter = GoRouter(routes: [
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return ResponsiveLayout(
-            desktopScaffold: DesktopScaffold(body: desktopHomepageBody,),
+            desktopScaffold: DesktopScaffold(),
             mobileScaffold: MobileScaffold(body:mobileHomepageBody ,));
       }),
   GoRoute(
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
         return ResponsiveLayout(
-            desktopScaffold: DesktopScaffold(body: desktopHomepageBody,),
+            desktopScaffold: DesktopScaffold(),
             mobileScaffold: MobileScaffold(body:mobileHomepageBody ,));
       }),
 
@@ -29,7 +29,7 @@ GoRouter goRouter = GoRouter(routes: [
       builder: (BuildContext context, GoRouterState state) {
         String name = state.params['name']!;
         return ResponsiveLayout(
-            desktopScaffold: DesktopScaffold(body: DesktopProductPage(title: name,)),
+            desktopScaffold: DesktopScaffold(),
             mobileScaffold:  MobileScaffold(body: MobileProductPage(title: name,)));
       })
 ]);

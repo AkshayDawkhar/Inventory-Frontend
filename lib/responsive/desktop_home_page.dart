@@ -17,4 +17,6 @@ Widget desktopHomepageBody = Center(
         padding: const EdgeInsets.all(12),
         itemBuilder: (BuildContext context, int index) {
           return myContainer(context, false, index);
-        }));
+        })
+)
+;
