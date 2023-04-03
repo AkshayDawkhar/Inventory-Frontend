@@ -137,7 +137,7 @@ myBottomNavBar(BuildContext context) => BottomNavigationBar(
       ],
     );
 
-myContainer(BuildContext context, bool mobile, int index) => InkWell(
+myContainer(BuildContext context, bool mobile, int index, String name) => InkWell(
       onTap: () {
         GoRouter.of(context).push('/product/$index');
       },
@@ -174,7 +174,7 @@ myContainer(BuildContext context, bool mobile, int index) => InkWell(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'my product',
+                          name,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: mobile ? 30 : 40,

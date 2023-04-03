@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/constants.dart';
+import 'package:inventory/helper.dart';
 
 Widget mobileHomepageBody = Center(
     child: GridView.builder(
@@ -14,6 +15,15 @@ Widget mobileHomepageBody = Center(
         itemCount: items.length,
         padding: const EdgeInsets.all(12),
         itemBuilder: (BuildContext context, int index) {
-          return myContainer(context, true, index);
-        })
-);
+          return cen;
+          // return myContainer(context, true, index, 'name');
+        }));
+
+Widget cen = FutureBuilder(
+    future: HttpHelper().fetchItem(),
+    builder: (builder, snapshot) {
+      if (snapshot.hasData) {
+        return const Center(child: Text('hello'));
+      }
+      return const Center(child: CircularProgressIndicator());
+    });

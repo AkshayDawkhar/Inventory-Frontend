@@ -30,7 +30,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
               itemCount: items.length,
               padding: const EdgeInsets.all(12),
               itemBuilder: (BuildContext context, int index) {
-                return myContainer(context,true,index);
+                return myContainer(context,true,index,'name');
               })
       ),
       

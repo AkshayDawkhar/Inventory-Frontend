@@ -16,7 +16,7 @@ Widget desktopHomepageBody = Center(
         itemCount: 2,
         padding: const EdgeInsets.all(12),
         itemBuilder: (BuildContext context, int index) {
-          return myContainer(context, false, index);
+          return myContainer(context, false, index,'name');
         })
 )
 ;

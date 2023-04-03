@@ -10,9 +10,14 @@ class HttpHelper{
     // final a = await http.get(url);
 
     final url = Uri.parse('http://127.0.0.1:8000/product/');
+    await Future.delayed(Duration(seconds: 1));
     final a = await http.get(url);
     print(a.statusCode);
     final json = jsonDecode(a.body);
     return json;
+  }
+  Future fetchItem() async{
+     await Future.delayed(Duration(seconds: 4));
+     return 12;
   }
 }

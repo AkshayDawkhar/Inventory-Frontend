@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory/responsive/desktop_home_page.dart';
 import '../helper.dart';
 import '/constants.dart';
+import 'mobile_home_page.dart';
 
 class DesktopScaffold extends StatefulWidget {
 
@@ -19,6 +20,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
     // TODO: implement initState
     // super.initState();
     // items= ;
+    Future.delayed(Duration(seconds: 10));
     items = HttpHelper().fetchItems();
 
     print('object');
@@ -48,13 +50,15 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
                           itemCount: snapshot.data!.length,
                           padding: const EdgeInsets.all(12),
                           itemBuilder: (BuildContext context, int index) {
-                            return myContainer(context, false, index);
+                            return cen;
+                            // return myContainer(context, false, index,snapshot.data?.elementAt(index)['pid']);
                           })
                   )
                   ;
                 }
                 else{
-                  return Text('data');
+                  return const CircularProgressIndicator();
+
                 }
               })
 
