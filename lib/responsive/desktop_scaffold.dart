@@ -22,7 +22,6 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
     // items= ;
     Future.delayed(Duration(seconds: 10));
     items = HttpHelper().fetchItems();
-
     print('object');
   }
   @override
@@ -50,8 +49,8 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
                           itemCount: snapshot.data!.length,
                           padding: const EdgeInsets.all(12),
                           itemBuilder: (BuildContext context, int index) {
-                            return cen;
-                            // return myContainer(context, false, index,snapshot.data?.elementAt(index)['pid']);
+                            // return cen(snapshot.data!.elementAt(index)['pid'].toString());
+                            return myContainer(context, false, index,snapshot.data!.elementAt(index)['pid'].toString(),snapshot.data!.elementAt(index)['dname'].toString());
                           })
                   )
                   ;

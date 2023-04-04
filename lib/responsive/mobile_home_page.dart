@@ -15,15 +15,17 @@ Widget mobileHomepageBody = Center(
         itemCount: items.length,
         padding: const EdgeInsets.all(12),
         itemBuilder: (BuildContext context, int index) {
-          return cen;
+          return cen('');
           // return myContainer(context, true, index, 'name');
         }));
 
-Widget cen = FutureBuilder(
-    future: HttpHelper().fetchItem(),
+Widget cen(String pid){
+  print(pid);
+  return FutureBuilder(
+    future: HttpHelper().fetchItem(pid),
     builder: (builder, snapshot) {
       if (snapshot.hasData) {
-        return const Center(child: Text('hello'));
+        return Center(child: Text(snapshot.data.toString()));
       }
       return const Center(child: CircularProgressIndicator());
-    });
+    });}
