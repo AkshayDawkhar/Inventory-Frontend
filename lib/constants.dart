@@ -67,9 +67,9 @@ myAppBar(String title) => AppBar(
       title: Text(title),
       backgroundColor: Colors.blueGrey[700],
     );
-
+// int ii = 0;
 String s = 'http://127.0.0.1:8000/product/';
- myDrawer(BuildContext context) => Drawer(
+ myDrawer(BuildContext context,int ii) => Drawer(
   // backgroundColor: myBackgroundColor,
   child: SingleChildScrollView(
     child: Column(
@@ -80,36 +80,36 @@ String s = 'http://127.0.0.1:8000/product/';
             return GoRouter.of(context).go('/');
           },
           // hoverColor: Colors.red,
-          leading: Icon(Icons.home),
-          title: Text('H O M E'),
+          leading: Icon(Icons.home,color: ii==0 ? Colors.black: Colors.blueGrey[500],),
+          title: Text('H O M E',style: TextStyle(color: ii==0 ? Colors.black:Colors.blueGrey[500]),),
         ),
         ListTile(
           onTap: () {
             return GoRouter.of(context).go('/analysis');
           },
-          leading: Icon(Icons.leaderboard),
-          title: Text('A N A L Y S I S'),
+          leading: Icon(Icons.leaderboard,color: ii==1 ? Colors.black: Colors.blueGrey[500],),
+          title: Text('A N A L Y S I S',style: TextStyle(color: ii==1 ? Colors.black:Colors.blueGrey[500]),),
         ),
         ListTile(
           onTap: () {
             return GoRouter.of(context).go('/order');
           },
-          leading: Icon(Icons.shopping_cart),
-          title: Text('O R D E R S'),
+          leading: Icon(Icons.shopping_cart,color: ii==2 ? Colors.black: Colors.blueGrey[500],),
+          title: Text('O R D E R S',style: TextStyle(color: ii==2 ? Colors.black:Colors.blueGrey[500]),),
         ),
         ListTile(
           onTap: () {
             return GoRouter.of(context).go('/account');
           },
-          leading: Icon(Icons.account_circle),
-          title: Text('A C C O U N T S'),
+          leading: Icon(Icons.account_circle,color: ii==3 ? Colors.black: Colors.blueGrey[500],),
+          title: Text('A C C O U N T S',style: TextStyle(color: ii==3 ? Colors.black:Colors.blueGrey[500]),),
         ),
         ListTile(
           onTap: () {
             return GoRouter.of(context).go('/product');
           },
-          leading: Icon(Icons.list_alt_rounded),
-          title: Text('P R O D U C T S'),
+          leading: Icon(Icons.list_alt_rounded,color: ii==4 ? Colors.black: Colors.blueGrey[500],),
+          title: Text('P R O D U C T S',style: TextStyle(color: ii==4 ? Colors.black:Colors.blueGrey[500]),),
         ),
       ],
     ),
