@@ -69,31 +69,45 @@ myAppBar(String title) => AppBar(
     );
 
 String s = 'http://127.0.0.1:8000/product/';
-var myDrawer = Drawer(
+ myDrawer(BuildContext context) => Drawer(
   // backgroundColor: myBackgroundColor,
   child: SingleChildScrollView(
     child: Column(
       children: [
         DrawerHeader(child: Icon(Icons.favorite)),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            return GoRouter.of(context).go('/');
+          },
           // hoverColor: Colors.red,
           leading: Icon(Icons.home),
           title: Text('H O M E'),
         ),
         ListTile(
+          onTap: () {
+            return GoRouter.of(context).go('/analysis');
+          },
           leading: Icon(Icons.leaderboard),
           title: Text('A N A L Y S I S'),
         ),
         ListTile(
+          onTap: () {
+            return GoRouter.of(context).go('/order');
+          },
           leading: Icon(Icons.shopping_cart),
           title: Text('O R D E R S'),
         ),
         ListTile(
+          onTap: () {
+            return GoRouter.of(context).go('/account');
+          },
           leading: Icon(Icons.account_circle),
           title: Text('A C C O U N T S'),
         ),
         ListTile(
+          onTap: () {
+            return GoRouter.of(context).go('/product');
+          },
           leading: Icon(Icons.list_alt_rounded),
           title: Text('P R O D U C T S'),
         ),

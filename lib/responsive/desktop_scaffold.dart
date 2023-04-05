@@ -30,7 +30,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
       appBar: myAppBar('home'),
       body: Row(
         children: [
-          Expanded(flex: 1, child: myDrawer),
+          Expanded(flex: 1, child: myDrawer(context)),
           Expanded(flex: 6, child: Center(
               child: FutureBuilder(
                   future: items,

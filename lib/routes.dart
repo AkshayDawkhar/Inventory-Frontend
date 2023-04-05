@@ -29,7 +29,7 @@ GoRouter goRouter = GoRouter(routes: [
       builder: (BuildContext context, GoRouterState state) {
         String name = state.params['name']!;
         return ResponsiveLayout(
-            desktopScaffold: DesktopScaffold(),
+            desktopScaffold: DesktopProductPage(title: 'k',),
             mobileScaffold:  MobileScaffold(body: MobileProductPage(title: name,)));
       })
 ]);

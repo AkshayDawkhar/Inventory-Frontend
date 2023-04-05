@@ -15,7 +15,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: myDrawer,
+      drawer: myDrawer(context),
       appBar: myAppBar('HOME'),
       body: Center(
           child: GridView.builder(
