@@ -11,6 +11,8 @@ import 'responsive/desktop_analysis_page.dart';
 import 'responsive/mobile_analysis_page.dart';
 import 'responsive/desktop_account_page.dart';
 import 'responsive/mobile_account_page.dart';
+import 'responsive/desktop_order_page.dart';
+import 'responsive/mobile_order_page.dart';
 
 GoRouter goRouter = GoRouter(routes: [
   GoRoute(
@@ -41,6 +43,13 @@ GoRouter goRouter = GoRouter(routes: [
         return ResponsiveLayout(
             desktopScaffold: DesktopAccountPage(),
             mobileScaffold: MobileAccountPage());
+      }),
+  GoRoute(
+      path: '/order',
+      builder: (BuildContext context, GoRouterState state) {
+        return ResponsiveLayout(
+            desktopScaffold: DesktopOrderPage(),
+            mobileScaffold: MobileOrderPage());
       }),
   GoRoute(
       path: '/product/:name',
