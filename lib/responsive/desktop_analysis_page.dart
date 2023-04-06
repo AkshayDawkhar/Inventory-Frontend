@@ -12,7 +12,13 @@ class _DesktopAnalysisState extends State<DesktopAnalysis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar('analysis'),
+      appBar: myAppBar('ANALYSIS'),
+      body: Row(
+        children: [
+          Expanded(flex: 1, child: myDrawer(context, 1)),
+          Expanded(flex: 6, child: Text('analysis'))
+        ],
+      ),
     );
   }
 }

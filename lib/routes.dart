@@ -31,7 +31,7 @@ GoRouter goRouter = GoRouter(routes: [
       builder: (BuildContext context, GoRouterState state) {
         return ResponsiveLayout(
             desktopScaffold: DesktopAnalysis(),
-            mobileScaffold: MobileScaffold(body:mobileHomepageBody ,));
+            mobileScaffold: MobileAnalysis());
       }),
 
   GoRoute(
