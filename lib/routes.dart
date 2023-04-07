@@ -13,6 +13,8 @@ import 'responsive/desktop_account_page.dart';
 import 'responsive/mobile_account_page.dart';
 import 'responsive/desktop_order_page.dart';
 import 'responsive/mobile_order_page.dart';
+import 'responsive/desktop_products_page.dart';
+import 'responsive/mobile_products_page.dart';
 
 GoRouter goRouter = GoRouter(routes: [
   GoRoute(
@@ -20,16 +22,19 @@ GoRouter goRouter = GoRouter(routes: [
       builder: (BuildContext context, GoRouterState state) {
         return ResponsiveLayout(
             desktopScaffold: DesktopScaffold(),
-            mobileScaffold: MobileScaffold(body:mobileHomepageBody ,));
+            mobileScaffold: MobileScaffold(
+              body: mobileHomepageBody,
+            ));
       }),
   GoRoute(
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
         return ResponsiveLayout(
             desktopScaffold: DesktopScaffold(),
-            mobileScaffold: MobileScaffold(body:mobileHomepageBody ,));
+            mobileScaffold: MobileScaffold(
+              body: mobileHomepageBody,
+            ));
       }),
-
   GoRoute(
       path: '/analysis',
       builder: (BuildContext context, GoRouterState state) {
@@ -52,11 +57,36 @@ GoRouter goRouter = GoRouter(routes: [
             mobileScaffold: MobileOrderPage());
       }),
   GoRoute(
-      path: '/product/:name',
+      path: '/product',
       builder: (BuildContext context, GoRouterState state) {
-        String name = state.params['name']!;
         return ResponsiveLayout(
-            desktopScaffold: DesktopProductPage(title: 'k',),
-            mobileScaffold:  MobileScaffold(body: MobileProductPage(title: name,)));
-      })
+            desktopScaffold: DesktopProductsPage(),
+            mobileScaffold: MobileProductsPage());
+      },
+      routes: [
+        GoRoute(
+            path: ':name',
+            builder: (BuildContext context, GoRouterState state) {
+              String name = state.params['name']!;
+              return ResponsiveLayout(
+                  desktopScaffold: DesktopProductPage(
+                    title: name,
+                  ),
+                  mobileScaffold: MobileScaffold(
+                      body: MobileProductPage(
+                        title: name,
+                      )));
+            }),
+      ],
+      ),
+
+  GoRoute(
+      path: '/product',
+      builder: (BuildContext context, GoRouterState state) {
+        // String name = state.params['name']!;
+        return ResponsiveLayout(
+          desktopScaffold: DesktopProductsPage(),
+          mobileScaffold: MobileProductsPage(),
+        );
+      }),
 ]);
