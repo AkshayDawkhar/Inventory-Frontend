@@ -80,13 +80,4 @@ GoRouter goRouter = GoRouter(routes: [
       ],
       ),
 
-  GoRoute(
-      path: '/product',
-      builder: (BuildContext context, GoRouterState state) {
-        // String name = state.params['name']!;
-        return ResponsiveLayout(
-          desktopScaffold: DesktopProductsPage(),
-          mobileScaffold: MobileProductsPage(),
-        );
-      }),
 ]);
