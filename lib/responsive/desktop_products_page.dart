@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/constants.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:inventory/routes.dart';
 import '../helper.dart';
 
 class DesktopProductsPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _DesktopProductsPageState extends State<DesktopProductsPage> {
       appBar: myAppBar('PRODUCTS'),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async{
-            List a = await HttpHelper().fetchItems();
+            GoRouter.of(context).go('/product/new');
             // sleep(const Duration(seconds: 3));
           },
           backgroundColor: Colors.blueGrey,

@@ -49,6 +49,7 @@ dev_dependencies:
   go_router: ^6.2.0
   http: ^0.13.5
   numeral: ^2.0.1
+  image_picker: ^0.8.7+1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -77,7 +77,7 @@ myDrawer(BuildContext context, int selected) =>
       child: SingleChildScrollView(
         child: Column(
           children: [
-            DrawerHeader(child: Icon(Icons.favorite)),
+            DrawerHeader(child: Icon(Icons.circle)),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/');
@@ -309,7 +309,7 @@ myContainer(BuildContext context, bool mobile, int index, String pid,
           );
         }
         else
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
       });
 }
 
