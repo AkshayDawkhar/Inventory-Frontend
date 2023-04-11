@@ -124,6 +124,15 @@ myDrawer(BuildContext context, int selected) =>
               title: Text('P R O D U C T S', style: TextStyle(
                   color: selected == 4 ? Colors.black : Colors.blueGrey[500]),),
             ),
+            ListTile(
+              onTap: () {
+                return GoRouter.of(context).go('/trash');
+              },
+              leading: Icon(Icons.delete,
+                color: selected == 5 ? Colors.black : Colors.blueGrey[500],),
+              title: Text('T R A S H', style: TextStyle(
+                  color: selected == 5 ? Colors.black : Colors.blueGrey[500]),),
+            ),
           ],
         ),
       ),
