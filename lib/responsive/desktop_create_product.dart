@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,7 @@ import '/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:inventory/helper.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:inventory/helper.dart';
 class DesktopCreateProductPage extends StatefulWidget {
   const DesktopCreateProductPage({super.key, required this.title});
 
@@ -21,14 +22,26 @@ class DesktopCreateProductPage extends StatefulWidget {
 class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
   ImagePicker picker = ImagePicker();
   XFile? image;
-  List<int> a = [10, 20];
-  List<int> b = [11, 21, 31, 41, 51, 61];
+  // List<int> selected = [];
+  // List<int> select = [11,12,44,333,23,22, 21, 31, 41, 51, 61];
+  List<int> selectedNumber = [];
+  Future<List> items = HttpHelper().fetchItems();
+  List<Map> selected = [];
+  List select = [];
+  final nameController = TextEditingController();
+  final categoryController = TextEditingController();
+  final colorController = TextEditingController();
+
+  final selectedController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   int count = 8;
 
   @override
   Widget build(BuildContext context) {
+    if(colorController.text.isEmpty){
+      colorController.text = 'black';
+    }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     void remove() {
@@ -38,11 +51,10 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
     return Scaffold(
         appBar: myAppBar('CREATE NEW PRODUCT'),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            count = count + 1;
-            print(count);
-            setState(() {});
+          onPressed: () async {
+            // setState(() {});
             if (formKey.currentState!.validate()) {
+              int aa = await HttpHelper().createItem(nameController.text,categoryController.text,colorController.text,selected,selectedNumber);
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Processing Data')));
             }
@@ -96,6 +108,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                       Container(
                                         padding: EdgeInsets.all(12),
                                         child: TextFormField(
+                                          controller: nameController,
                                           decoration: InputDecoration(
                                               labelText: 'Product Name'),
                                           validator: (value) {
@@ -108,6 +121,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                       Container(
                                         padding: EdgeInsets.all(12),
                                         child: TextFormField(
+                                          controller: categoryController,
                                           decoration: InputDecoration(
                                               labelText: 'Category'),
                                           validator: (value) {
@@ -120,7 +134,8 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                       Container(
                                         padding: EdgeInsets.all(12),
                                         child: TextFormField(
-                                          initialValue: "black",
+                                          controller: colorController,
+                                          // initialValue: "black",
                                           decoration: InputDecoration(
                                               labelText: 'Color'),
                                           validator: (value) {
@@ -154,9 +169,9 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                   child: Container(
                                     height: height / 1.7,
                                     color: Colors.blueGrey[100],
-                                    child: a.isNotEmpty
+                                    child: selected.isNotEmpty
                                         ? GridView.builder(
-                                            itemCount: a.length,
+                                            itemCount: selected.length,
                                             shrinkWrap: true,
                                             physics:
                                                 AlwaysScrollableScrollPhysics(),
@@ -174,29 +189,58 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                     showDialog(
                                                         context: context,
                                                         builder: (context) {
+                                                          selectedController.text = selectedNumber[index].toString();
                                                           return AlertDialog(
                                                             title: Text(
-                                                                'data ${a[index]}'),
+                                                                '${selected[index]['dname']}'),
                                                             // icon: const Icon(Icons.),
                                                             content:
                                                                 TextFormField(
+                                                              autofocus: true,
+
                                                               inputFormatters: <
                                                                   TextInputFormatter>[
-                                                                TextInputFormatter.withFunction((oldValue, newValue) {
+                                                                FilteringTextInputFormatter
+                                                                    .allow(RegExp(
+                                                                        r'[0-9]')),
+                                                                TextInputFormatter
+                                                                    .withFunction(
+                                                                        (oldValue,
+                                                                            newValue) {
                                                                   // Disallow values that start with 0
-                                                                  if (newValue.text.startsWith('0')) {
+                                                                  if (newValue
+                                                                      .text
+                                                                      .startsWith(
+                                                                          '0')) {
                                                                     return oldValue;
                                                                   }
-                                                                  final int? parsed = int.tryParse(newValue.text);
-                                                                  if ( parsed! < 1) {
+
+                                                                  try {
+                                                                    final int
+                                                                        parsed =
+                                                                        int.parse(
+                                                                            newValue.text);
+                                                                    if (parsed <
+                                                                        1) {
+                                                                      return oldValue;
+                                                                    }
+                                                                    return newValue
+                                                                        .copyWith(
+                                                                            text:
+                                                                                parsed.toString());
+                                                                  } on FormatException catch (exe) {
+                                                                    print(exe);
+                                                                    return newValue;
+                                                                  } catch (exe) {
+                                                                    print(exe);
                                                                     return oldValue;
                                                                   }
-                                                                  return newValue.copyWith(text: parsed.toString());
                                                                 }),
                                                               ],
                                                               // initialValue:
-                                                              //     '1',
-                                                              keyboardType:
+                                                              //     '${selectedNumber[index]}',
+                                                              controller: selectedController,
+                                                                  keyboardType:
                                                                   TextInputType
                                                                       .number,
                                                             ),
@@ -204,8 +248,9 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                               TextButton(
                                                                   onPressed:
                                                                       () {
-                                                                    b.add(a.removeAt(
+                                                                    select.add(selected.removeAt(
                                                                         index));
+                                                                    selectedNumber.removeAt(index);
                                                                     remove();
                                                                     setState(
                                                                         () {});
@@ -223,7 +268,12 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                               TextButton(
                                                                   onPressed:
                                                                       () {
+                                                                      print(selectedController.text);
+                                                                      selectedNumber[index]=int.parse(selectedController.text);
                                                                     remove();
+                                                                    setState(() {
+
+                                                                    });
                                                                   },
                                                                   style: TextButton.styleFrom(
                                                                       foregroundColor:
@@ -240,9 +290,8 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                     decoration: BoxDecoration(
                                                         border: Border.all(
                                                             width: 3,
-                                                            color: index == 3
-                                                                ? Colors.blue
-                                                                : Colors.red),
+                                                            color: Colors
+                                                                .blueGrey),
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
@@ -255,6 +304,19 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
                                                       children: [
+                                                        Center(
+                                                          child: Text(
+                                                            '${selectedNumber[index]}',
+                                                          softWrap: false,
+                                                            overflow: TextOverflow.fade,
+                                                            style: TextStyle(
+
+                                                                color: Colors.green,
+                                                                fontSize: 50,
+                                                                fontWeight: FontWeight.bold
+                                                            ),
+                                                          ),
+                                                        ),
                                                         Container(
                                                             decoration:
                                                                 BoxDecoration(
@@ -269,7 +331,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                             ),
                                                             child: Center(
                                                                 child: Text(
-                                                                    'data ${a[index]}'))),
+                                                                    '${selected[index]['dname']}'))),
                                                       ],
                                                     ),
                                                   ),
@@ -287,44 +349,55 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                   child: Container(
                                     height: height / 1.7,
                                     color: Colors.blueGrey[50],
-                                    child: GridView.builder(
-                                        itemCount: b.length,
-                                        shrinkWrap: true,
-                                        physics:
-                                            AlwaysScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 5),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: InkWell(
-                                              onTap: () {
-                                                print(index);
-                                                a.add(b.removeAt(index));
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        width: 3,
-                                                        color: index == 3
-                                                            ? Colors.blue
-                                                            : Colors.red),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                12)),
-                                                    image: const DecorationImage(
-                                                        image: NetworkImage(
-                                                            'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
-                                                        fit: BoxFit.fill)),
-                                                child: Text('data ${b[index]}'),
-                                              ),
-                                            ),
-                                          );
-                                        }),
+                                    child: FutureBuilder(
+                                      future: items,
+                                        builder: (context,snapshot){
+                                        if(snapshot.hasData){
+                                          select = snapshot.data!;
+                                          return GridView.builder(
+                                              itemCount: select.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                              AlwaysScrollableScrollPhysics(),
+                                              gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 5),
+                                              itemBuilder:
+                                                  (BuildContext context, int index) {
+                                                return Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      print(index);
+                                                      selected.add(select.removeAt(index));
+                                                      // selected.add(snapshot.data![index]);
+                                                      print(selected);
+                                                      selectedNumber.add(1);
+                                                      setState(() {});
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              width: 3,
+                                                              color: index == 3
+                                                                  ? Colors.blue
+                                                                  : Colors.red),
+                                                          borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  12)),
+                                                          image: const DecorationImage(
+                                                              image: NetworkImage(
+                                                                  'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                              fit: BoxFit.fill)),
+                                                      child: Text('${snapshot.data![index]['dname']}'),
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        }
+                                      return Center(child: CircularProgressIndicator());
+                                    }),
                                   ),
                                 ),
                               ),
@@ -337,3 +410,42 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
         ));
   }
 }
+// GridView.builder(
+// itemCount: select.length,
+// shrinkWrap: true,
+// physics:
+// AlwaysScrollableScrollPhysics(),
+// gridDelegate:
+// SliverGridDelegateWithFixedCrossAxisCount(
+// crossAxisCount: 5),
+// itemBuilder:
+// (BuildContext context, int index) {
+// return Padding(
+// padding: const EdgeInsets.all(8.0),
+// child: InkWell(
+// onTap: () {
+// print(index);
+// selected.add(select.removeAt(index));
+// selectedNumber.add(1);
+// setState(() {});
+// },
+// child: Container(
+// decoration: BoxDecoration(
+// border: Border.all(
+// width: 3,
+// color: index == 3
+// ? Colors.blue
+//     : Colors.red),
+// borderRadius:
+// BorderRadius.all(
+// Radius.circular(
+// 12)),
+// image: const DecorationImage(
+// image: NetworkImage(
+// 'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+// fit: BoxFit.fill)),
+// child: Text('data ${select[index]}'),
+// ),
+// ),
+// );
+// })
