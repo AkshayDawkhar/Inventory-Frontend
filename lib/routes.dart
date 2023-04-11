@@ -17,7 +17,8 @@ import 'responsive/desktop_products_page.dart';
 import 'responsive/mobile_products_page.dart';
 import 'responsive/mobile_create_product.dart';
 import 'responsive/desktop_create_product.dart';
-
+import 'responsive/desktop_trash_page.dart';
+import 'responsive/mobile_trash_page.dart';
 GoRouter goRouter = GoRouter(routes: [
   GoRoute(
       path: '/',
@@ -91,5 +92,11 @@ GoRouter goRouter = GoRouter(routes: [
             }),
       ],
       ),
-
+  GoRoute(
+      path: '/trash',
+      builder: (BuildContext context, GoRouterState state) {
+        return ResponsiveLayout(
+            desktopScaffold: DesktopTrash(),
+            mobileScaffold: MobileTrash());
+      }),
 ]);
