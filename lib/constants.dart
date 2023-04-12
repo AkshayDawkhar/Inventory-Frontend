@@ -184,7 +184,8 @@ myContainer(BuildContext context, bool mobile, int index, String pid,
         if (snapshot.hasData) {
           return InkWell(
             onTap: () {
-              GoRouter.of(context).push('/product/$index');
+              print(snapshot.data);
+              GoRouter.of(context).push('/product/${snapshot.data['pid']}');
             },
             child: Container(
               decoration: BoxDecoration(
