@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
@@ -70,6 +71,14 @@ class HttpHelper {
   Future<List> fetchNeeded(String pid) async {
     await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('http://127.0.0.1:8000/build/needed/$pid');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print(json);
+    return json;
+  }
+  Future<int> fetchMax(String pid) async {
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/build/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);

@@ -19,8 +19,8 @@ class _DesktopProductPage2State extends State<DesktopProductPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      child: Text('name'),
-    ));
+          child: Text('name'),
+        ));
   }
 }
 
@@ -38,7 +38,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
   late Future<List> required;
   late Future data;
   late Future Needed;
-
+  late Future Max;
   @override
   void initState() {
     HttpHelper Http = HttpHelper();
@@ -48,11 +48,15 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
     building = Http.fetchItem(widget.title);
     required = Http.fetchRequired(widget.title);
     Needed = Http.fetchNeeded(widget.title);
+    Max = Http.fetchMax(widget.title);
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     double fontsize1 = width * 0.0353;
     double fontsize2 = width * 0.01567;
     return Scaffold(
@@ -76,7 +80,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                               width: width / 2,
                               decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
+                                  BorderRadius.all(Radius.circular(12)),
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
@@ -96,20 +100,28 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                         if (snapshot.hasData) {
                                           return Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                '${snapshot.data['dname']}',
-                                                style: TextStyle(
-                                                    fontSize: width / 30),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+
+                                                  Text(
+                                                    '${snapshot.data['dname']}',
+                                                    style: TextStyle(
+                                                        fontSize: width / 30),
+                                                  ),
+
+                                                ],
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    '${snapshot.data['category']}',
+                                                    '${snapshot
+                                                        .data['category']}',
                                                     style: TextStyle(
                                                         fontSize: width / 80,
                                                         color: Colors.blueGrey),
@@ -117,8 +129,8 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                   Text(
                                                     '${snapshot.data['color']}',
                                                     style: TextStyle(
-                                                        fontSize: width / 80,
-                                                        ),
+                                                      fontSize: width / 80,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -140,57 +152,82 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                           if (snapshot.hasData) {
                                             return Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               children: <Widget>[
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   children: <Widget>[
                                                     Text('InStock:'),
                                                     Text(
-                                                        '${snapshot.data['instock']}'),
+                                                        '${snapshot
+                                                            .data['instock']}'),
                                                   ],
                                                 ),
                                                 Divider(),
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   children: <Widget>[
                                                     Text('Building:'),
                                                     Text(
-                                                        '${snapshot.data['building']}'),
+                                                        '${snapshot
+                                                            .data['building']}'),
                                                   ],
                                                 ),
                                                 Divider(),
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   children: <Widget>[
                                                     Text('Needed:'),
                                                     Text(
-                                                        '${snapshot.data['needed']}'),
+                                                        '${snapshot
+                                                            .data['needed']}'),
                                                   ],
                                                 ),
                                                 Divider(),
                                                 Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   children: <Widget>[
                                                     Text('Recommended:'),
                                                     Text(
-                                                        '${snapshot.data['recommended']}'),
+                                                        '${snapshot
+                                                            .data['recommended']}'),
                                                   ],
+                                                ),
+                                                Divider(),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: <Widget>[
+                                                    Text('MAX build:'),
+                                                    FutureBuilder(
+                                                      future: Max,
+                                                      builder: (context,snapshot) {
+                                                        print('----------> ${snapshot.data.toString()}');
+                                                        if(snapshot.hasData){
+                                                        return Text(
+                                                            '${snapshot
+                                                                .data.toString()}',
+                                                        );
+                                                      } else{
+                                                        return Text('-');}
+                                                      }
+                                                    )],
                                                 ),
                                               ],
                                             );
                                           } else {
                                             return Center(
                                               child:
-                                                  CircularProgressIndicator(),
+                                              CircularProgressIndicator(),
                                             );
                                           }
                                         }),
@@ -227,8 +264,8 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 8),
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: width < 1200 ? 5 : 8),
                                 itemBuilder: (BuildContext context, int index) {
                                   Map a = snapshot.data![index];
                                   return Padding(
@@ -242,9 +279,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 3,
-                                                color: index == 3
-                                                    ? Colors.blue
-                                                    : Colors.red),
+                                                color: Colors.blueGrey),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12)),
                                             image: const DecorationImage(
@@ -259,15 +294,15 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                 Map b = snapshot.data;
                                                 return Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.end,
                                                   children: [
                                                     Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
+                                                      CrossAxisAlignment
+                                                          .stretch,
                                                       children: [
                                                         Text('${b['dname']}'),
                                                         Center(
@@ -275,29 +310,49 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                             '${a['numbers']}',
                                                             softWrap: false,
                                                             overflow:
-                                                                TextOverflow
-                                                                    .fade,
+                                                            TextOverflow
+                                                                .fade,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .green,
                                                                 fontSize:
-                                                                    width / 25,
+                                                                width / 25,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                                FontWeight
+                                                                    .bold),
                                                           ),
                                                         )
+
                                                       ],
                                                     ),
-                                                    Container(
-                                                      child: Text('123'),
+                                                    FutureBuilder(
+                                                        future: HttpHelper()
+                                                            .fetchItem(
+                                                            b['pid']),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // print('------------->${a['pid']}');
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return Container(
+                                                              padding: EdgeInsets
+                                                                  .all(5),
+                                                              child: Text(
+                                                                  '${snapshot
+                                                                      .data['instock']}'),
+                                                            );
+                                                          } else {
+                                                            return Text(
+                                                                'Instock');
+                                                          }
+                                                        }
                                                     )
                                                   ],
                                                 );
                                               } else {
                                                 return Center(
                                                   child:
-                                                      CircularProgressIndicator(),
+                                                  CircularProgressIndicator(),
                                                 );
                                               }
                                             }),
@@ -332,7 +387,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                   color: Colors.blueGrey[100],
                                   child: const Center(
                                       child:
-                                          Text('Not Needed for any Product')),
+                                      Text('Not Needed for any Product')),
                                 ),
                               );
                             }
@@ -341,8 +396,8 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 8),
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: width < 1200 ? 5 : 8),
                                 itemBuilder: (BuildContext context, int index) {
                                   Map a = snapshot.data![index];
                                   return Padding(
@@ -356,9 +411,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                         decoration: BoxDecoration(
                                             border: Border.all(
                                                 width: 3,
-                                                color: index == 3
-                                                    ? Colors.blue
-                                                    : Colors.red),
+                                                color: Colors.blueGrey),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12)),
                                             image: const DecorationImage(
@@ -373,15 +426,15 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                 Map b = snapshot.data;
                                                 return Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.end,
                                                   children: [
                                                     Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
+                                                      CrossAxisAlignment
+                                                          .stretch,
                                                       children: [
                                                         Text('${b['dname']}'),
                                                         Center(
@@ -389,29 +442,48 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                             '${a['numbers']}',
                                                             softWrap: false,
                                                             overflow:
-                                                                TextOverflow
-                                                                    .fade,
+                                                            TextOverflow
+                                                                .fade,
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .green,
                                                                 fontSize:
-                                                                    width / 25,
+                                                                width / 25,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                                FontWeight
+                                                                    .bold),
                                                           ),
                                                         )
                                                       ],
                                                     ),
-                                                    Container(
-                                                      child: Text('123'),
+                                                    FutureBuilder(
+                                                        future: HttpHelper()
+                                                            .fetchItem(
+                                                            a['pid']),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // print('------------->${a['pid']}');
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return Container(
+                                                              padding: EdgeInsets
+                                                                  .all(5),
+                                                              child: Text(
+                                                                  '${snapshot
+                                                                      .data['instock']}'),
+                                                            );
+                                                          } else {
+                                                            return Text(
+                                                                'Instock');
+                                                          }
+                                                        }
                                                     )
                                                   ],
                                                 );
                                               } else {
                                                 return Center(
                                                   child:
-                                                      CircularProgressIndicator(),
+                                                  CircularProgressIndicator(),
                                                 );
                                               }
                                             }),
@@ -501,9 +573,13 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            List a = await HttpHelper().fetchItems();
+            return showDialog(context: context, builder: (context) {
+              return AlertDialog(title: Text('name'),);
+            });
+            // List a = await HttpHelper().fetchItems();
             // sleep(const Duration(seconds: 3));
-            print(a);
+            // print(a);
+
           },
           backgroundColor: Colors.blueGrey,
           icon: Icon(
