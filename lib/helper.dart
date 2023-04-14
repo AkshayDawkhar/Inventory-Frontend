@@ -25,7 +25,14 @@ class HttpHelper {
     print(json);
     return json;
   }
-
+  Future fetchItemName(String pid) async {
+    await Future.delayed(Duration(seconds: 5));
+    final url = Uri.parse('http://127.0.0.1:8000/product/$pid');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print(json);
+    return json;
+  }
   Future createItem(String name,String category,String color,List requiredItems,List requiredItemsNo) async {
     final url = Uri.parse('http://127.0.0.1:8000/product/');
     final requiredItemsId = requiredItems.map((e) => e['pid']).toList();
@@ -57,6 +64,14 @@ class HttpHelper {
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('______________-----_____________');
+    print(json);
+    return json;
+  }
+  Future<List> fetchNeeded(String pid) async {
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/build/needed/$pid');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
     print(json);
     return json;
   }
