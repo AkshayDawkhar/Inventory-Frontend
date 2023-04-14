@@ -63,16 +63,14 @@ List<int> items = <int>[
 ];
 var myBackgroundColor = Colors.white;
 
-myAppBar(String title) =>
-    AppBar(
+myAppBar(String title) => AppBar(
       title: Text(title),
       backgroundColor: Colors.blueGrey[700],
     );
 // int ii = 0;
 String s = 'http://127.0.0.1:8000/product/';
 
-myDrawer(BuildContext context, int selected) =>
-    Drawer(
+myDrawer(BuildContext context, int selected) => Drawer(
       // backgroundColor: myBackgroundColor,
       child: SingleChildScrollView(
         child: Column(
@@ -83,63 +81,92 @@ myDrawer(BuildContext context, int selected) =>
                 return GoRouter.of(context).go('/');
               },
               // hoverColor: Colors.red,
-              leading: Icon(Icons.home,
-                color: selected == 0 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('H O M E', style: TextStyle(
-                  color: selected == 0 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.home,
+                color: selected == 0 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'H O M E',
+                style: TextStyle(
+                    color: selected == 0 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/analysis');
               },
-              leading: Icon(Icons.leaderboard,
-                color: selected == 1 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('A N A L Y S I S', style: TextStyle(
-                  color: selected == 1 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.leaderboard,
+                color: selected == 1 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'A N A L Y S I S',
+                style: TextStyle(
+                    color: selected == 1 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/order');
               },
-              leading: Icon(Icons.shopping_cart,
-                color: selected == 2 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('O R D E R S', style: TextStyle(
-                  color: selected == 2 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.shopping_cart,
+                color: selected == 2 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'O R D E R S',
+                style: TextStyle(
+                    color: selected == 2 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/account');
               },
-              leading: Icon(Icons.account_circle,
-                color: selected == 3 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('A C C O U N T S', style: TextStyle(
-                  color: selected == 3 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.account_circle,
+                color: selected == 3 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'A C C O U N T S',
+                style: TextStyle(
+                    color: selected == 3 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/product');
               },
-              leading: Icon(Icons.list_alt_rounded,
-                color: selected == 4 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('P R O D U C T S', style: TextStyle(
-                  color: selected == 4 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.list_alt_rounded,
+                color: selected == 4 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'P R O D U C T S',
+                style: TextStyle(
+                    color: selected == 4 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
             ListTile(
               onTap: () {
                 return GoRouter.of(context).go('/trash');
               },
-              leading: Icon(Icons.delete,
-                color: selected == 5 ? Colors.black : Colors.blueGrey[500],),
-              title: Text('T R A S H', style: TextStyle(
-                  color: selected == 5 ? Colors.black : Colors.blueGrey[500]),),
+              leading: Icon(
+                Icons.delete,
+                color: selected == 5 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'T R A S H',
+                style: TextStyle(
+                    color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
+              ),
             ),
           ],
         ),
       ),
     );
 
-myBottomNavBar(BuildContext context) =>
-    BottomNavigationBar(
+myBottomNavBar(BuildContext context) => BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.white,
@@ -175,8 +202,8 @@ myBottomNavBar(BuildContext context) =>
       ],
     );
 
-myContainer(BuildContext context, bool mobile, int index, String pid,
-    String name) {
+myContainer(
+    BuildContext context, bool mobile, int index, String pid, String name) {
   final a = HttpHelper().fetchItem(pid);
   return FutureBuilder(
       future: a,
@@ -227,8 +254,8 @@ myContainer(BuildContext context, bool mobile, int index, String pid,
                                     fontWeight: FontWeight.bold),
                               ),
                               Column(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Row(
                                     // crossAxisAlignment: CrossAxisAlignment.end,
@@ -317,13 +344,12 @@ myContainer(BuildContext context, bool mobile, int index, String pid,
               ),
             ),
           );
-        }
-        else
+        } else
           return Center(child: CircularProgressIndicator());
       });
 }
 
-var bottom_navigation_bar_items = const [
+var bottomNavigationBarItems = const [
   BottomNavigationBarItem(
       icon: Icon(
         Icons.home,
@@ -343,7 +369,81 @@ var bottom_navigation_bar_items = const [
       icon: Icon(
         Icons.add_box,
       ),
-      label: 'create')
-  ,
+      label: 'create'),
 // BottomNavigationBarItem(icon: Icon(Icons.add_box,color: Colors.blueGrey,), label: 'create'),
 ];
+
+Widget myContainer1(BuildContext context,String name,String pid) {
+
+  Future a = HttpHelper().fetchItem(pid);
+  return InkWell(
+    onTap: (){
+      GoRouter.of(context).push('/product/$pid');
+    },
+    child: Container(
+
+      // padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                    fit: BoxFit.cover,
+                  )),
+
+            ),
+          ),
+          FutureBuilder(
+              future:a,
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  int instock = snapshot.data['instock'];
+                  int building = snapshot.data['building'];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 5.0),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      children: [
+                        Text(
+                          "${Numeral(instock).format()} InStock  ",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        Icon(
+                          Icons.circle,
+                          color: Colors.blueGrey,
+                          size: 10,
+                        ),
+                        Text(
+                          "  ${Numeral(building).format()} Building  ",
+                          style: TextStyle(color: Colors.blueGrey),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+
+              }else{
+                  return Container(padding: EdgeInsets.all(15),child: Text('loading...'),);
+                }
+              }
+          ),
+        ],
+      ),
+    ),
+  );
+}
