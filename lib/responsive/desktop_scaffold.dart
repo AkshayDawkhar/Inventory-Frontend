@@ -26,6 +26,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
   }
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: myAppBar('home'),
       body: Row(
@@ -38,19 +39,21 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
                 if(snapshot.hasData){
                   return Center(
                       child: GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 4 / 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 10,
+                          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: width < 1200 ? width < 900 ?2:3:4,
+                            childAspectRatio: 1.3,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 20,
                           ),
                           addRepaintBoundaries: true,
                           addAutomaticKeepAlives: true,
                           itemCount: snapshot.data!.length,
                           padding: const EdgeInsets.all(12),
                           itemBuilder: (BuildContext context, int index) {
+                            Map a = snapshot.data!.elementAt(index);
                             // return cen(snapshot.data!.elementAt(index)['pid'].toString());
-                            return myContainer(context, false, index,snapshot.data!.elementAt(index)['pid'].toString(),snapshot.data!.elementAt(index)['dname'].toString());
+                            return myContainer1(context,a['dname'],a['pid']);
+                            // return myContainer(context, false, index,snapshot.data!.elementAt(index)['pid'].toString(),snapshot.data!.elementAt(index)['dname'].toString());
                           })
                   )
                   ;

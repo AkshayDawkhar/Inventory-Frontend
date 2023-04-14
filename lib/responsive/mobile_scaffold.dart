@@ -54,7 +54,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
         // return GoRouter.of(context).go('/you/${aa + 1}');
         // return context.go('you/12');
       },
-      items: bottom_navigation_bar_items,
+      items: bottomNavigationBarItems,
     ));
   }
 }
