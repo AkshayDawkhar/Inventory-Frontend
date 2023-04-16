@@ -84,4 +84,13 @@ class HttpHelper {
     print(json);
     return json;
   }
+  Future<int> deleteproduct(String pid) async{
+    await Future.delayed(Duration(seconds: 6));
+    final url = Uri.parse('http://127.0.0.1:8000/product/$pid');
+    final a = await http.delete(url);
+    final json = jsonDecode(a.body);
+    print('------------> ${a.statusCode}');
+    return a.statusCode;
+  }
+
 }
