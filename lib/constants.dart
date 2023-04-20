@@ -373,15 +373,13 @@ var bottomNavigationBarItems = const [
 // BottomNavigationBarItem(icon: Icon(Icons.add_box,color: Colors.blueGrey,), label: 'create'),
 ];
 
-Widget myContainer1(BuildContext context,String name,String pid) {
-
+Widget myContainer1(BuildContext context, String name, String pid) {
   Future a = HttpHelper().fetchItem(pid);
   return InkWell(
-    onTap: (){
+    onTap: () {
       GoRouter.of(context).push('/product/$pid');
     },
     child: Container(
-
       // padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,54 +394,169 @@ Widget myContainer1(BuildContext context,String name,String pid) {
                         'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
                     fit: BoxFit.cover,
                   )),
-
             ),
           ),
           FutureBuilder(
-              future:a,
+              future: a,
               builder: (context, snapshot) {
-                if(snapshot.hasData){
+                if (snapshot.hasData) {
                   int instock = snapshot.data['instock'];
                   int building = snapshot.data['building'];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5.0),
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 5.0),
+                      Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      children: [
-                        Text(
-                          "${Numeral(instock).format()} InStock  ",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                        Icon(
-                          Icons.circle,
-                          color: Colors.blueGrey,
-                          size: 10,
-                        ),
-                        Text(
-                          "  ${Numeral(building).format()} Building  ",
-                          style: TextStyle(color: Colors.blueGrey),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
-
-              }else{
-                  return Container(padding: EdgeInsets.all(15),child: Text('loading...'),);
+                      SizedBox(height: 5.0),
+                      Row(
+                        children: [
+                          Text(
+                            "${Numeral(instock).format()} InStock  ",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                          Icon(
+                            Icons.circle,
+                            color: Colors.blueGrey,
+                            size: 10,
+                          ),
+                          Text(
+                            "  ${Numeral(building).format()} Building  ",
+                            style: TextStyle(color: Colors.blueGrey),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container(
+                    padding: EdgeInsets.all(15),
+                    child: Text('loading...'),
+                  );
                 }
-              }
-          ),
+              }),
         ],
       ),
     ),
   );
+}
+
+Widget myTrashContainer(
+    BuildContext context, String name, String pid, int ttl) {
+  int days = (ttl / 86400).toInt();
+  // Future a = HttpHelper().fetchItem(pid);
+  return Container(
+    // padding: EdgeInsets.all(10.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.circular(12),
+                image: const DecorationImage(
+                  image: NetworkImage(
+                      'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+        Row(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 5.0),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5.0),
+                  Text(
+                    // "${Numeral(instock).format()} InStock  ",
+                    "$days days ",
+                    style:
+                        TextStyle(color: days > 10 ? Colors.green : Colors.red),
+                  ),
+                ],
+              ),
+            ),
+            InkWell(
+              child: Icon(Icons.repeat),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Restore'),
+                      );
+                    });
+              },
+            ),
+            InkWell(
+              child: Icon(
+                Icons.delete,
+                color: Colors.red[400],
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text('$name will be deleted permanently'),
+                        title: Text('Delete'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              remove(context);
+                            },
+                            child: Text('cancel'),
+                            // style: TextButton.styleFrom(
+                            //     foregroundColor:
+                            //     Colors
+                            //         .red),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              remove(context);
+                              int a = await HttpHelper().deleteTrash(pid);
+                              // if (a == 200) {
+                              //   return showDialog(
+                              //       context: context,
+                              //       builder: (context) {
+                              //         return AlertDialog(
+                              //           title: Text('Deletes successfully'),
+                              //         );
+                              //       });
+                              // }
+                            },
+                            child: Text('delete'),
+                            style: TextButton.styleFrom(
+                                foregroundColor: Colors.red),
+                          )
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+void remove(context) {
+  Navigator.of(context).pop();
 }

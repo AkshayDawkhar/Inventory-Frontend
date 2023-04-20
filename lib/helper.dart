@@ -92,5 +92,46 @@ class HttpHelper {
     print('------------> ${a.statusCode}');
     return a.statusCode;
   }
+  Future<List> fetchTrashProduct() async{
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/product/trash/');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print('trash product -----------> $json');
+    return json;
 
+  }
+  Future<int> deleteTrash(String pid) async{
+    await Future.delayed(Duration(seconds: 6));
+    final url = Uri.parse('http://127.0.0.1:8000/product/trash/$pid');
+    final a = await http.delete(url);
+    final json = jsonDecode(a.body);
+    print('------------> ${a.statusCode}-->${a.body}');
+    return a.statusCode;
+  }
+  Future<int> restoreTrash(String pid) async{
+    await Future.delayed(Duration(seconds: 6));
+    final url = Uri.parse('http://127.0.0.1:8000/product/trash/$pid');
+    final a = await http.post(url);
+    final json = jsonDecode(a.body);
+    print('------------> ${a.statusCode}-->${a.body}');
+    return a.statusCode;
+  }
+  Future<List> fetchAccount() async{
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/account/');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print('account -----------> $json');
+    return json;
+  }
+
+  Future<List> fetchAdmin() async{
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/account/admin/');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print('admin -----------> $json');
+    return json;
+  }
 }
