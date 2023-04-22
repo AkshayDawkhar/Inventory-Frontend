@@ -63,27 +63,15 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
         direction: Axis.horizontal, //use vertical to show  on vertical axis
         children: <Widget>[
           Container(
-              margin: EdgeInsets.all(10),
-              child: FloatingActionButton(
-                onPressed: () {
-
-                  //action code for button 1
-                },
-                child: Icon(Icons.add),
-              )), //button first
-          // button second
-
-          Container(
             margin: EdgeInsets.all(10),
             child: FloatingActionButton.extended(
               onPressed: () {
-
                 items = HttpHelper().fetchAccount();
                 mode = mode == 'admin' ? 'worker' : 'admin';
-                if(mode == 'admin'){
+                if (mode == 'admin') {
                   print('getting admins');
                   items = HttpHelper().fetchAdmin();
-                }else{
+                } else {
                   items = HttpHelper().fetchAccount();
                 }
                 setState(() {});
@@ -93,7 +81,74 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
               icon: Icon(Icons.repeat),
             ),
           ), // button third
+          Container(
+              margin: EdgeInsets.all(5),
+              child: FloatingActionButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Create ${mode}"),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextField(
+                                // controller: _firstNameController,
+                                decoration: InputDecoration(
+                                  labelText: "First Name",
+                                ),
+                              ),
+                              TextField(
+                                // controller: _lastNameController,
+                                decoration: InputDecoration(
+                                  labelText: "Last Name",
+                                ),
+                              ),
+                              TextField(
+                                // controller: _emailController,
+                                decoration: InputDecoration(
+                                  labelText: "Email",
+                                ),
+                              ),
+                              TextField(
+                                // controller: _usernameController,
+                                decoration: InputDecoration(
+                                  labelText: "Username",
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              child: Text("Cancel"),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                            TextButton(
+                              child: Text("Create"),
+                              style: TextButton.styleFrom(
+                                  foregroundColor:
+                                  Colors
+                                      .green),
+                              onPressed: () {
+                                // String firstName = _firstNameController.text;
+                                // String lastName = _lastNameController.text;
+                                // String email = _emailController.text;
+                                // String username = _usernameController.text;
+                                print('called');
+                                // Do something with the user's information, such as save it to a database
 
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                  //action code for button 1
+                },
+                child: Icon(Icons.add),
+              )), //button first
+          // button second
           // Add more buttons here
         ],
       ),
@@ -157,26 +212,25 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                       //   ),
                                       // ),
                                       Container(
-                                        color:Colors.blueGrey[50],
+                                        color: Colors.blueGrey[50],
                                         padding: EdgeInsets.all(12),
                                         child: Row(
                                           // crossAxisAlignment: CrossAxisAlignment.stretch,
                                           children: [
                                             Expanded(
                                               child: Column(
-
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   SizedBox(height: 5.0),
                                                   Row(
                                                     children: [
-
                                                       Text(
                                                         '$name $lname',
                                                         style: TextStyle(
                                                           fontSize: 16.0,
-                                                          fontWeight: FontWeight.bold,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                     ],
@@ -189,18 +243,18 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                         "username: ",
                                                         style: TextStyle(
                                                             // color: Colors.blueGrey
-                                                        ),
+                                                            ),
                                                       ),
                                                       Text(
                                                         // "${Numeral(instock).format()} InStock  ",
                                                         "$username",
                                                         style: TextStyle(
-                                                            color: Colors.blueGrey),
+                                                            color: Colors
+                                                                .blueGrey),
                                                       ),
                                                     ],
                                                   ),
                                                   SizedBox(height: 5.0),
-
                                                   Row(
                                                     children: [
                                                       Text("mail: "),
@@ -208,7 +262,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                         // "${Numeral(instock).format()} InStock  ",
                                                         "$mail",
                                                         style: TextStyle(
-                                                            color: Colors.blueGrey),
+                                                            color: Colors
+                                                                .blueGrey),
                                                       ),
                                                     ],
                                                   ),
@@ -270,7 +325,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                             onPressed: () {
                                                               remove(context);
                                                             },
-                                                            child: Text('cancel'),
+                                                            child:
+                                                                Text('cancel'),
                                                             // style: TextButton.styleFrom(
                                                             //     foregroundColor:
                                                             //     Colors
@@ -296,19 +352,22 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                               //       });
                                                               // }
                                                             },
-                                                            child: Text('delete'),
+                                                            child:
+                                                                Text('delete'),
                                                             style: TextButton
                                                                 .styleFrom(
-                                                                foregroundColor:
-                                                                Colors
-                                                                    .red),
+                                                                    foregroundColor:
+                                                                        Colors
+                                                                            .red),
                                                           )
                                                         ],
                                                       );
                                                     });
                                               },
                                             ),
-                                            SizedBox(width: 10,),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             InkWell(
                                               child: Icon(
                                                 Icons.delete,
@@ -327,7 +386,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                             onPressed: () {
                                                               remove(context);
                                                             },
-                                                            child: Text('cancel'),
+                                                            child:
+                                                                Text('cancel'),
                                                             // style: TextButton.styleFrom(
                                                             //     foregroundColor:
                                                             //     Colors
@@ -353,7 +413,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                               //       });
                                                               // }
                                                             },
-                                                            child: Text('delete'),
+                                                            child:
+                                                                Text('delete'),
                                                             style: TextButton
                                                                 .styleFrom(
                                                                     foregroundColor:
@@ -365,7 +426,6 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                     });
                                               },
                                             ),
-
                                           ],
                                         ),
                                       ),
