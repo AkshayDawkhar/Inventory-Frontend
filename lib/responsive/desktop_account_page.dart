@@ -88,61 +88,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          title: Text("Create ${mode}"),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              TextField(
-                                // controller: _firstNameController,
-                                decoration: InputDecoration(
-                                  labelText: "First Name",
-                                ),
-                              ),
-                              TextField(
-                                // controller: _lastNameController,
-                                decoration: InputDecoration(
-                                  labelText: "Last Name",
-                                ),
-                              ),
-                              TextField(
-                                // controller: _emailController,
-                                decoration: InputDecoration(
-                                  labelText: "Email",
-                                ),
-                              ),
-                              TextField(
-                                // controller: _usernameController,
-                                decoration: InputDecoration(
-                                  labelText: "Username",
-                                ),
-                              ),
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              child: Text("Cancel"),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                            TextButton(
-                              child: Text("Create"),
-                              style: TextButton.styleFrom(
-                                  foregroundColor:
-                                  Colors
-                                      .green),
-                              onPressed: () {
-                                // String firstName = _firstNameController.text;
-                                // String lastName = _lastNameController.text;
-                                // String email = _emailController.text;
-                                // String username = _usernameController.text;
-                                print('called');
-                                // Do something with the user's information, such as save it to a database
-
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
+                        return UserInfoDialog(mode:mode);
                       });
                   //action code for button 1
                 },
