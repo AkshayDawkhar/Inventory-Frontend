@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/helper.dart';
+import 'package:inventory/responsive/desktop_account_page.dart';
 import 'package:numeral/numeral.dart';
 
 List<int> items = <int>[
@@ -559,4 +561,150 @@ Widget myTrashContainer(
 
 void remove(context) {
   Navigator.of(context).pop();
+}
+
+class UserInfoDialog extends StatefulWidget {
+  const UserInfoDialog({Key? key, required this.mode}) : super(key: key);
+  final String mode;
+
+  @override
+  State<UserInfoDialog> createState() => _UserInfoDialogState();
+}
+
+class _UserInfoDialogState extends State<UserInfoDialog> {
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Create $mode"),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: _firstNameController,
+              decoration: InputDecoration(
+                labelText: "First Name",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter your first name";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _lastNameController,
+              inputFormatters: [
+                TextInputFormatter.withFunction((oldValue, newValue) {
+                  return TextEditingValue(
+                      text: newValue.text.toLowerCase(),
+                      selection: newValue.selection);
+                })
+              ],
+              decoration: InputDecoration(
+                labelText: "Last Name",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter your last name";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                labelText: "Email",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter your email address";
+                }
+                if (!value.contains("@")) {
+                  return "Please enter a valid email address";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: "Username",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter a username";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: "Password",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter a password";
+                }
+                if (value.length < 8) {
+                  return "Password must be at least 8 characters long";
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () async {
+            print('clicked');
+            // await createAdmin(context);
+            // Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          style: TextButton.styleFrom(foregroundColor: Colors.green),
+          child: Text("create"),
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              String firstName = _firstNameController.text;
+              String lastName = _lastNameController.text;
+              String email = _emailController.text;
+              String username = _usernameController.text;
+              String password = _passwordController.text;
+              // Do something with the user's information, such as save it to a database
+              // Navigator.of(context).pop();
+              createAdmin( context, firstName, lastName, username, password, email);
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+Future<int> createAdmin(BuildContext context,String f_name,String l_name, String username,String password,String mail) async {
+  int a = await HttpHelper().createAdmin(f_name,l_name,username,password,mail);
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('$a'),
+        );
+      });
+
+  return 2;
 }
