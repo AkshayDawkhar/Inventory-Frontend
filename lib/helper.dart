@@ -146,7 +146,7 @@ class HttpHelper {
     return json;
   }
 
-  Future<int> createAdmin(String f_name,String l_name, String username,String password,String mail) async {
+  Future<http.Response> createAdmin(String f_name,String l_name, String username,String password,String mail) async {
     // String f_name = 'akshayqwqw';
     // String l_name = 'dawkharqwqw';
     // String username = 'akshaydawkhar2qwqw';
@@ -166,6 +166,33 @@ class HttpHelper {
           "mail": mail
         }));
     print('creating admin ${responce.body}');
-    return responce.statusCode;
+    return responce;
+  }
+  Future<int> deleteadmin(String username) async {
+    await Future.delayed(Duration(seconds: 2));
+    final url = Uri.parse('http://127.0.0.1:8000/account/admin/$username');
+    final a = await http.delete(url);
+    final json = jsonDecode(a.body);
+    print('-----------+++===-> ${a.statusCode}-->${a.body}');
+    return a.statusCode;
+  }
+
+
+  Future<int> deleteWorker(String username) async {
+    await Future.delayed(Duration(seconds: 2));
+    final url = Uri.parse('http://127.0.0.1:8000/account/$username');
+    final a = await http.delete(url);
+    final json = jsonDecode(a.body);
+    print('-----------+++===-> ${a.statusCode}-->${a.body}');
+    return a.statusCode;
+  }
+  Future<int> deleteAccount(String mode, String username) async {
+    if(mode == 'admin'){
+    return deleteadmin(username);
+    }else if(mode == 'worker'){
+      return deleteadmin(username);
+    }else{
+      return -1;
+    }
   }
 }

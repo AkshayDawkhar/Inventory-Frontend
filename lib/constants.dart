@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inventory/helper.dart';
 import 'package:inventory/responsive/desktop_account_page.dart';
 import 'package:numeral/numeral.dart';
+import 'package:http/http.dart' as http;
 
 List<int> items = <int>[
   900,
@@ -636,6 +639,7 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               },
             ),
             TextFormField(
+              onTap: () {},
               controller: _usernameController,
               decoration: InputDecoration(
                 labelText: "Username",
@@ -687,7 +691,8 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               String password = _passwordController.text;
               // Do something with the user's information, such as save it to a database
               // Navigator.of(context).pop();
-              createAdmin( context, firstName, lastName, username, password, email);
+              createAdmin(
+                  context, firstName, lastName, username, password, email);
             }
           },
         ),
@@ -696,15 +701,55 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
   }
 }
 
-Future<int> createAdmin(BuildContext context,String f_name,String l_name, String username,String password,String mail) async {
-  int a = await HttpHelper().createAdmin(f_name,l_name,username,password,mail);
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('$a'),
-        );
-      });
+Future<int> createAdmin(BuildContext context, String f_name, String l_name,
+    String username, String password, String mail) async {
+  http.Response a =
+      await HttpHelper().createAdmin(f_name, l_name, username, password, mail);
+  // final body = jsonDecode(a.body);
+  if (a.statusCode == 201) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Colors.green[500],
+            title: Text(
+              'Created sucessfully',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icon(
+              Icons.done,
+              color: Colors.white,
+            ),
+          );
+        });
+  }
+  else if (a.statusCode == 208) {
+    final body = jsonDecode(a.body);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // iconColor: Colors.white,
+            // titleTextStyle: TextStyle(color: Colors.white),
+            backgroundColor: Colors.red[500],
+            title: Text(body['error'][0].toString(),style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.highlight_remove,color: Colors.white,),
+          );
+        });
+  }
+  else {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            // iconColor: Colors.white,
+            // titleTextStyle: TextStyle(color: Colors.white),
+            backgroundColor: Colors.red[500],
+            title: Text('some thing went wrong',style: TextStyle(color: Colors.white),),
+            icon: Icon(Icons.highlight_remove,color: Colors.white,),
+          );
+        });
 
+  }
   return 2;
 }
