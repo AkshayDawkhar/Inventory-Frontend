@@ -168,7 +168,7 @@ class HttpHelper {
     print('creating admin ${responce.body}');
     return responce;
   }
-  Future<int> deleteadmin(String username) async {
+  Future<int> deleteAdmin(String username) async {
     await Future.delayed(Duration(seconds: 2));
     final url = Uri.parse('http://127.0.0.1:8000/account/admin/$username');
     final a = await http.delete(url);
@@ -188,9 +188,9 @@ class HttpHelper {
   }
   Future<int> deleteAccount(String mode, String username) async {
     if(mode == 'admin'){
-    return deleteadmin(username);
+    return deleteAdmin(username);
     }else if(mode == 'worker'){
-      return deleteadmin(username);
+      return deleteWorker(username);
     }else{
       return -1;
     }

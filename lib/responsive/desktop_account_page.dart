@@ -378,7 +378,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
   }
    deleteAdmin(username)async {
     print('deleting------------------------');
-     int a = await HttpHelper().deleteadmin(username);
+     int a = await HttpHelper().deleteAdmin(username);
      setState(() {
        items = HttpHelper().fetchAdmin();
        print('setting state');
