@@ -87,7 +87,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return UserInfoDialog(mode:mode);
+                        return UserInfoDialog(mode: mode);
                       });
                   //action code for button 1
                 },
@@ -108,7 +108,6 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                     if (snapshot.hasData) {
                       return Center(
                           child: GridView.builder(
-
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: width < 1500
@@ -116,7 +115,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                         ? 2
                                         : 3
                                     : 4,
-                                childAspectRatio: 19/4.8,
+                                childAspectRatio: 19 / 4.8,
                                 crossAxisSpacing: 15,
                                 mainAxisSpacing: 20,
                               ),
@@ -139,8 +138,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                 // return myTrashContainer(context,a['dname'],a['pid'],a['ttl(dname)']);
                                 // return myContainer(context, false, index,snapshot.data!.elementAt(index)['pid'].toString(),snapshot.data!.elementAt(index)['dname'].toString());
                                 return Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     // Expanded(
                                     //   child: Container(
@@ -156,7 +154,12 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                     //   ),
                                     // ),
                                     Container(
-                                      color: Colors.blueGrey[50],
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.blueGrey,width: 2),
+                                          color: Colors.blueGrey[50],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12))),
+                                      // color: Colors.blueGrey[50],
                                       padding: EdgeInsets.all(12),
                                       child: Row(
                                         // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -193,8 +196,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                       // "${Numeral(instock).format()} InStock  ",
                                                       "$username",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .blueGrey),
+                                                          color:
+                                                              Colors.blueGrey),
                                                     ),
                                                   ],
                                                 ),
@@ -206,8 +209,8 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                       // "${Numeral(instock).format()} InStock  ",
                                                       "$mail",
                                                       style: TextStyle(
-                                                          color: Colors
-                                                              .blueGrey),
+                                                          color:
+                                                              Colors.blueGrey),
                                                     ),
                                                   ],
                                                 ),
@@ -333,23 +336,18 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                           onPressed: () {
                                                             remove(context);
                                                           },
-                                                          child:
-                                                              Text('cancel'),
+                                                          child: Text('cancel'),
                                                         ),
                                                         TextButton(
-                                                          onPressed: () async{
+                                                          onPressed: () async {
                                                             // deleteTrash(pid);
 
                                                             remove(context);
-                                                            await deleteUser(mode,username);
-                                                            setState(() {
-
-                                                            });
-
-
+                                                            await deleteUser(
+                                                                mode, username);
+                                                            setState(() {});
                                                           },
-                                                          child:
-                                                              Text('delete'),
+                                                          child: Text('delete'),
                                                           style: TextButton
                                                               .styleFrom(
                                                                   foregroundColor:
@@ -375,23 +373,33 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
       ),
     );
   }
-   deleteUser(mode,username)async {
-    print('deleting------------------------');
-     int a = await HttpHelper().deleteAccount(mode,username);
-     if(a == 200){
-       showDialog(context: context, builder: (context){ return deletedSuccessfully;});
-     }else{
-       showDialog(context: context, builder: (context){ return somethingWentWrong;});
-     }
 
-     setState(() {
-       if(mode == 'admin'){
-       items = HttpHelper().fetchAdmin();}else{
-         items = HttpHelper().fetchAccount();
-       }
-       print('setting state');
-       // items = ;
-     });
-     return a;
+  deleteUser(mode, username) async {
+    print('deleting------------------------');
+    int a = await HttpHelper().deleteAccount(mode, username);
+    if (a == 200) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return deletedSuccessfully;
+          });
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return somethingWentWrong;
+          });
+    }
+
+    setState(() {
+      if (mode == 'admin') {
+        items = HttpHelper().fetchAdmin();
+      } else {
+        items = HttpHelper().fetchAccount();
+      }
+      print('setting state');
+      // items = ;
+    });
+    return a;
   }
 }
