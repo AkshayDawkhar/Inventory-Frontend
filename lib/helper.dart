@@ -195,4 +195,13 @@ class HttpHelper {
       return -1;
     }
   }
+  Future<List> fetchOrder() async {
+    await Future.delayed(Duration(seconds: 1));
+    final url = Uri.parse('http://127.0.0.1:8000/order/');
+    final a = await http.get(url);
+    final json = jsonDecode(a.body);
+    print('orders -----------> $json');
+    return json;
+  }
+
 }
