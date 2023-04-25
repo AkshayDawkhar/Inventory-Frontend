@@ -53,7 +53,6 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
   // Future<list>
   @override
   Widget build(BuildContext context) {
-    String type = 'Worker';
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -342,7 +341,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
                                                             // deleteTrash(pid);
 
                                                             remove(context);
-                                                            await deleteAdmin(username);
+                                                            await deleteUser(mode,username);
                                                             setState(() {
 
                                                             });
@@ -376,11 +375,20 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
       ),
     );
   }
-   deleteAdmin(username)async {
+   deleteUser(mode,username)async {
     print('deleting------------------------');
-     int a = await HttpHelper().deleteAdmin(username);
+     int a = await HttpHelper().deleteAccount(mode,username);
+     if(a == 200){
+       showDialog(context: context, builder: (context){ return deletedSuccessfully;});
+     }else{
+       showDialog(context: context, builder: (context){ return somethingWentWrong;});
+     }
+
      setState(() {
-       items = HttpHelper().fetchAdmin();
+       if(mode == 'admin'){
+       items = HttpHelper().fetchAdmin();}else{
+         items = HttpHelper().fetchAccount();
+       }
        print('setting state');
        // items = ;
      });

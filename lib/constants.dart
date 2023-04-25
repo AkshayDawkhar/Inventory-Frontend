@@ -722,8 +722,7 @@ Future<int> createAdmin(BuildContext context, String f_name, String l_name,
             ),
           );
         });
-  }
-  else if (a.statusCode == 208) {
+  } else if (a.statusCode == 208) {
     final body = jsonDecode(a.body);
     showDialog(
         context: context,
@@ -732,12 +731,17 @@ Future<int> createAdmin(BuildContext context, String f_name, String l_name,
             // iconColor: Colors.white,
             // titleTextStyle: TextStyle(color: Colors.white),
             backgroundColor: Colors.red[500],
-            title: Text(body['error'][0].toString(),style: TextStyle(color: Colors.white),),
-            icon: Icon(Icons.highlight_remove,color: Colors.white,),
+            title: Text(
+              body['error'][0].toString(),
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icon(
+              Icons.highlight_remove,
+              color: Colors.white,
+            ),
           );
         });
-  }
-  else {
+  } else {
     showDialog(
         context: context,
         builder: (context) {
@@ -745,11 +749,41 @@ Future<int> createAdmin(BuildContext context, String f_name, String l_name,
             // iconColor: Colors.white,
             // titleTextStyle: TextStyle(color: Colors.white),
             backgroundColor: Colors.red[500],
-            title: Text('some thing went wrong',style: TextStyle(color: Colors.white),),
-            icon: Icon(Icons.highlight_remove,color: Colors.white,),
+            title: Text(
+              'some thing went wrong',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icon(
+              Icons.highlight_remove,
+              color: Colors.white,
+            ),
           );
         });
-
   }
   return 2;
 }
+
+AlertDialog somethingWentWrong = const AlertDialog(
+  icon: Icon(
+    Icons.close,
+    color: Colors.white,
+  ),
+  title: Text(
+    'Something Went Wrong',
+    style: TextStyle(color: Colors.white),
+  ),
+  backgroundColor: Colors.redAccent,
+);
+
+
+AlertDialog deletedSuccessfully = const AlertDialog(
+  icon: Icon(
+    Icons.done,
+    color: Colors.white,
+  ),
+  title: Text(
+    'Deleted Successfully',
+    style: TextStyle(color: Colors.white),
+  ),
+  backgroundColor: Colors.greenAccent,
+);
