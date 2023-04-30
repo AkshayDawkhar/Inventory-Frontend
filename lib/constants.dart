@@ -775,7 +775,6 @@ AlertDialog somethingWentWrong = const AlertDialog(
   backgroundColor: Colors.redAccent,
 );
 
-
 AlertDialog deletedSuccessfully = const AlertDialog(
   icon: Icon(
     Icons.done,
@@ -787,3 +786,99 @@ AlertDialog deletedSuccessfully = const AlertDialog(
   ),
   backgroundColor: Colors.greenAccent,
 );
+
+class dialogForOrder extends StatefulWidget {
+  const dialogForOrder({Key? key}) : super(key: key);
+
+  @override
+  State<dialogForOrder> createState() => _dialogForOrderState();
+}
+
+class _dialogForOrderState extends State<dialogForOrder> {
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _continuityController = TextEditingController();
+  DateTime dateTime = DateTime.now();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Add order'),
+      content: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              onTap: () {},
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              ],
+              controller: _continuityController,
+              decoration: InputDecoration(
+                labelText: "continuity",
+              ),
+              validator: (value) {
+                if (value!.isEmpty) {
+
+                  return "Please enter a username";
+                }
+                int continuity = int.parse(value);
+                if (continuity < 1) {
+                  return "More Than 0";
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              readOnly: true,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter a username";
+                }
+                return null;
+              },
+              controller: _dateController,
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                ).then((value) {
+                  setState(() {
+                    dateTime = value!;
+                  });
+                  _dateController.text =
+                      '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                  print('setting state');
+                });
+              },
+              decoration: InputDecoration(
+                labelText: "Date",
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            remove(context);
+          },
+          child: Text('cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              remove(context);
+            }
+          },
+          child: Text('Save'),
+          style: TextButton.styleFrom(foregroundColor: Colors.greenAccent),
+        )
+      ],
+    );
+  }
+}

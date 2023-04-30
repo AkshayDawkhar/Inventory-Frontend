@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:inventory/helper.dart';
@@ -61,14 +62,14 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                 child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  GoRouter.of(context).go('/');
                 },
               ),
             ],
           );
         },
       );
-    }
-    else if(response.statusCode == 404){
+    } else if (response.statusCode == 404) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -86,8 +87,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           );
         },
       );
-    }
-    else {
+    } else {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -206,6 +206,17 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                           title: Text('Edit'),
                                                         ),
                                                       ),
+                                                      PopupMenuItem<int>(
+                                                        value: 2,
+                                                        child: ListTile(
+                                                          leading: Icon(
+                                                            Icons.add,
+                                                            color: Colors
+                                                                .greenAccent,
+                                                          ),
+                                                          title: Text('Order'),
+                                                        ),
+                                                      ),
                                                     ];
                                                   }, onSelected: (value) {
                                                     if (value == 0) {
@@ -223,7 +234,9 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                                       true,
                                                                   onPressed:
                                                                       () async {
-                                                                    deleteProduct(widget.title);
+                                                                    deleteProduct(
+                                                                        widget
+                                                                            .title);
                                                                     remove();
 
                                                                     // int status = await HttpHelper().deleteproduct(widget.title);
@@ -250,8 +263,11 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                       print(
                                                           "Settings menu is selected.");
                                                     } else if (value == 2) {
-                                                      print(
-                                                          "Logout menu is selected.");
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return dialogForOrder();
+                                                          });
                                                     }
                                                   }),
                                                 ],

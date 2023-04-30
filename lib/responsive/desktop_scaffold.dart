@@ -20,7 +20,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
     // TODO: implement initState
     // super.initState();
     // items= ;
-    Future.delayed(Duration(seconds: 10));
+    // Future.delayed(Duration(seconds: 10));
     items = HttpHelper().fetchItems();
     print('object');
   }

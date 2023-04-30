@@ -27,7 +27,7 @@ class _DesktopAccountPageState extends State<DesktopAccountPage> {
     // TODO: implement initState
     // super.initState();
     // items= ;
-    Future.delayed(Duration(seconds: 10));
+    // Future.delayed(Duration(seconds: 10));
     items = HttpHelper().fetchAccount();
     print('object');
   }
