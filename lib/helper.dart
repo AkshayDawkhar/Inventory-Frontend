@@ -5,12 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
+  String HOSTNAME = 'http://127.0.0.1:8000';
   Future<List> fetchItems() async {
     List<Map> items = [{}, {}];
-    // Uri url = Uri.parse('http://127.0.0.1:8000/product/');
+    // Uri url = Uri.parse('$HOSTNAME/product/');
     // final a = await http.get(url);
 
-    final url = Uri.parse('http://127.0.0.1:8000/product/');
+    final url = Uri.parse('$HOSTNAME/product/');
     // await Future.delayed(Duration(seconds: 1));
     final a = await http.get(url);
     print(a.statusCode);
@@ -20,7 +21,7 @@ class HttpHelper {
 
   Future fetchItem(String pid) async {
     // await Future.delayed(Duration(seconds: 4));
-    final url = Uri.parse('http://127.0.0.1:8000/build/edit/$pid');
+    final url = Uri.parse('$HOSTNAME/build/edit/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);
@@ -29,7 +30,7 @@ class HttpHelper {
 
   Future fetchItemName(String pid) async {
     // await Future.delayed(Duration(seconds: 5));
-    final url = Uri.parse('http://127.0.0.1:8000/product/$pid');
+    final url = Uri.parse('$HOSTNAME/product/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);
@@ -38,7 +39,7 @@ class HttpHelper {
 
   Future createItem(String name, String category, String color,
       List requiredItems, List requiredItemsNo) async {
-    final url = Uri.parse('http://127.0.0.1:8000/product/');
+    final url = Uri.parse('$HOSTNAME/product/');
     final requiredItemsId = requiredItems.map((e) => e['pid']).toList();
     final responce = await http.post(url,
         headers: <String, String>{
@@ -57,7 +58,7 @@ class HttpHelper {
 
   Future<List> fetchRequired(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/build/required/$pid');
+    final url = Uri.parse('$HOSTNAME/build/required/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);
@@ -66,7 +67,7 @@ class HttpHelper {
 
   Future fetchItem1(String pid) async {
     // await Future.delayed(Duration(seconds: 4));
-    final url = Uri.parse('http://127.0.0.1:8000/product/$pid');
+    final url = Uri.parse('$HOSTNAME/product/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('______________-----_____________');
@@ -76,7 +77,7 @@ class HttpHelper {
 
   Future<List> fetchNeeded(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/build/needed/$pid');
+    final url = Uri.parse('$HOSTNAME/build/needed/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);
@@ -85,7 +86,7 @@ class HttpHelper {
 
   Future<int> fetchMax(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/build/$pid');
+    final url = Uri.parse('$HOSTNAME/build/$pid');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print(json);
@@ -94,7 +95,7 @@ class HttpHelper {
 
   Future<int> deleteproduct(String pid) async {
     // await Future.delayed(Duration(seconds: 6));
-    final url = Uri.parse('http://127.0.0.1:8000/product/$pid');
+    final url = Uri.parse('$HOSTNAME/product/$pid');
     final a = await http.delete(url);
     final json = jsonDecode(a.body);
     print('------------> ${a.statusCode}');
@@ -103,7 +104,7 @@ class HttpHelper {
 
   Future<List> fetchTrashProduct() async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/product/trash/');
+    final url = Uri.parse('$HOSTNAME/product/trash/');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('trash product -----------> $json');
@@ -112,7 +113,7 @@ class HttpHelper {
 
   Future<int> deleteTrash(String pid) async {
     // await Future.delayed(Duration(seconds: 6));
-    final url = Uri.parse('http://127.0.0.1:8000/product/trash/$pid');
+    final url = Uri.parse('$HOSTNAME/product/trash/$pid');
     final a = await http.delete(url);
     final json = jsonDecode(a.body);
     print('------------> ${a.statusCode}-->${a.body}');
@@ -121,7 +122,7 @@ class HttpHelper {
 
   Future<int> restoreTrash(String pid) async {
     // await Future.delayed(Duration(seconds: 6));
-    final url = Uri.parse('http://127.0.0.1:8000/product/trash/$pid');
+    final url = Uri.parse('$HOSTNAME/product/trash/$pid');
     final a = await http.post(url);
     final json = jsonDecode(a.body);
     print('------------> ${a.statusCode}-->${a.body}');
@@ -130,7 +131,7 @@ class HttpHelper {
 
   Future<List> fetchAccount() async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/account/');
+    final url = Uri.parse('$HOSTNAME/account/');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('account -----------> $json');
@@ -139,28 +140,28 @@ class HttpHelper {
 
   Future<List> fetchAdmin() async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/account/admin/');
+    final url = Uri.parse('$HOSTNAME/account/admin/');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('admin -----------> $json');
     return json;
   }
 
-  Future<http.Response> createAdmin(String f_name,String l_name, String username,String password,String mail) async {
+  Future<http.Response> createAdmin(String fName,String lName, String username,String password,String mail) async {
     // String f_name = 'akshayqwqw';
     // String l_name = 'dawkharqwqw';
     // String username = 'akshaydawkhar2qwqw';
     // String password = 'akshaydawkhar2qwqw';
     // String mail = 'akshay@gmail.comcom';
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/account/admin/');
+    final url = Uri.parse('$HOSTNAME/account/admin/');
     final responce = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({
-          "f_name": f_name,
-          "l_name": l_name,
+          "f_name": fName,
+          "l_name": lName,
           "username": username,
           "password": password,
           "mail": mail
@@ -170,7 +171,7 @@ class HttpHelper {
   }
   Future<int> deleteAdmin(String username) async {
     // await Future.delayed(Duration(seconds: 2));
-    final url = Uri.parse('http://127.0.0.1:8000/account/admin/$username');
+    final url = Uri.parse('$HOSTNAME/account/admin/$username');
     final a = await http.delete(url);
     final json = jsonDecode(a.body);
     print('-----------+++===-> ${a.statusCode}-->${a.body}');
@@ -180,7 +181,7 @@ class HttpHelper {
 
   Future<int> deleteWorker(String username) async {
     // await Future.delayed(Duration(seconds: 2));
-    final url = Uri.parse('http://127.0.0.1:8000/account/$username');
+    final url = Uri.parse('$HOSTNAME/account/$username');
     final a = await http.delete(url);
     final json = jsonDecode(a.body);
     print('-----------+++===-> ${a.statusCode}-->${a.body}');
@@ -197,7 +198,7 @@ class HttpHelper {
   }
   Future<List> fetchOrder() async {
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('http://127.0.0.1:8000/order/');
+    final url = Uri.parse('$HOSTNAME/order/');
     final a = await http.get(url);
     final json = jsonDecode(a.body);
     print('orders -----------> $json');
