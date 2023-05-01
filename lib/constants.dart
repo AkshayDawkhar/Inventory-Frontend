@@ -788,7 +788,8 @@ AlertDialog deletedSuccessfully = const AlertDialog(
 );
 
 class dialogForOrder extends StatefulWidget {
-  const dialogForOrder({Key? key}) : super(key: key);
+  const dialogForOrder({Key? key, required this.pid}) : super(key: key);
+  final pid;
 
   @override
   State<dialogForOrder> createState() => _dialogForOrderState();
@@ -821,8 +822,7 @@ class _dialogForOrderState extends State<dialogForOrder> {
               ),
               validator: (value) {
                 if (value!.isEmpty) {
-
-                  return "Please enter a username";
+                  return "Please enter continuity";
                 }
                 int continuity = int.parse(value);
                 if (continuity < 1) {
@@ -835,7 +835,7 @@ class _dialogForOrderState extends State<dialogForOrder> {
               readOnly: true,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Please enter a username";
+                  return "Please enter a Date";
                 }
                 return null;
               },
@@ -872,7 +872,9 @@ class _dialogForOrderState extends State<dialogForOrder> {
         TextButton(
           onPressed: () {
             if (formKey.currentState!.validate()) {
-              remove(context);
+              int continuity = int.parse(_continuityController.text);
+              // remove(context);
+              createOrder(context, widget.pid, continuity);
             }
           },
           child: Text('Save'),
@@ -881,4 +883,48 @@ class _dialogForOrderState extends State<dialogForOrder> {
       ],
     );
   }
+}
+
+Future<int> createOrder(
+    BuildContext context, String pid, int continuity) async {
+  int status = await HttpHelper().createOrder(pid, continuity);
+
+  showDialog(
+      context: context,
+      builder: (context) {
+        return status == 200
+            ? AlertDialog(
+                title: Text(
+                  'Successfully Pace Order',
+                ),
+                icon: Icon(
+                  Icons.done,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      GoRouter.of(context).go('/order');
+                    },
+                    child: Text('View'),
+                  ),
+                  TextButton(onPressed: () {
+                    // remove(context);
+                    // remove(context);
+                    GoRouter.of(context).refresh();
+                  }, child: Text('Ok')),
+                ],
+              )
+            : AlertDialog(
+                title: Text(
+                  'Something Went Wrong',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+                icon: Icon(
+                  Icons.close_outlined,
+                  color: Colors.redAccent,
+                ),
+              );
+      });
+
+  return 1;
 }

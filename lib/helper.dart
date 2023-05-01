@@ -204,5 +204,20 @@ class HttpHelper {
     print('orders -----------> $json');
     return json;
   }
+  Future<int> createOrder(String pid,int numbers) async {
+    int time =  1681371419;
+    await Future.delayed(Duration(seconds: 6));
+    final url = Uri.parse('$HOSTNAME/order/edit/$pid');
+    final responce = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          "timestamp": time,
+          "numbers":numbers
+        }));
+    print('creating order ${responce.body}');
+    return responce.statusCode;
+  }
 
 }

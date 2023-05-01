@@ -62,7 +62,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                 child: Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  GoRouter.of(context).go('/');
+                  GoRouter.of(context).go('/product');
                 },
               ),
             ],
@@ -266,7 +266,9 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                       showDialog(
                                                           context: context,
                                                           builder: (context) {
-                                                            return dialogForOrder();
+                                                            return dialogForOrder(
+                                                                pid: widget
+                                                                    .title);
                                                           });
                                                     }
                                                   }),
@@ -725,14 +727,8 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            return showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text('name'),
-                  );
-                });
+          onPressed: () {
+            // GoRouter.of(context).go('/product/${widget.title}');
             // List a = await HttpHelper().fetchItems();
             // sleep(const Duration(seconds: 3));
             // print(a);
