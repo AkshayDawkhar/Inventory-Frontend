@@ -204,9 +204,13 @@ class HttpHelper {
     print('orders -----------> $json');
     return json;
   }
-  Future<int> createOrder(String pid,int numbers) async {
-    int time =  1681371419;
-    await Future.delayed(Duration(seconds: 6));
+  Future<int> createOrder(String pid,int numbers,DateTime date) async {
+    // int time =  1681371419;
+    date =  date.add(Duration(hours: 5,minutes: 30)); // this code need to remove after fixing backend time format
+    int time = date.toUtc().millisecondsSinceEpoch ~/ 1000;
+    print(time);
+    print(date);
+    await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/order/edit/$pid');
     final responce = await http.post(url,
         headers: <String, String>{

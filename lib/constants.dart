@@ -92,8 +92,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'H O M E',
-                style: TextStyle(
-                    color: selected == 0 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 0 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
             ListTile(
@@ -106,8 +105,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'A N A L Y S I S',
-                style: TextStyle(
-                    color: selected == 1 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 1 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
             ListTile(
@@ -120,8 +118,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'O R D E R S',
-                style: TextStyle(
-                    color: selected == 2 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 2 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
             ListTile(
@@ -134,8 +131,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'A C C O U N T S',
-                style: TextStyle(
-                    color: selected == 3 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 3 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
             ListTile(
@@ -148,8 +144,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'P R O D U C T S',
-                style: TextStyle(
-                    color: selected == 4 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 4 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
             ListTile(
@@ -162,8 +157,7 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'T R A S H',
-                style: TextStyle(
-                    color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
           ],
@@ -207,8 +201,7 @@ myBottomNavBar(BuildContext context) => BottomNavigationBar(
       ],
     );
 
-myContainer(
-    BuildContext context, bool mobile, int index, String pid, String name) {
+myContainer(BuildContext context, bool mobile, int index, String pid, String name) {
   final a = HttpHelper().fetchItem(pid);
   return FutureBuilder(
       future: a,
@@ -220,9 +213,7 @@ myContainer(
               GoRouter.of(context).push('/product/${snapshot.data['pid']}');
             },
             child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.blueGrey[200],
-                  borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(12)),
               alignment: Alignment.center,
               child: Row(
                 children: [
@@ -232,8 +223,7 @@ myContainer(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             image: const DecorationImage(
-                              image: NetworkImage(
-                                  'https://static.wixstatic.com/media/256076_15225f5ed7654366b363bb856eaf6b62~mv2.jpg/v1/fill/w_520,h_420,al_c,q_85,usm_0.66_1.00_0.01/256076_15225f5ed7654366b363bb856eaf6b62~mv2.webp'),
+                              image: NetworkImage('https://static.wixstatic.com/media/256076_15225f5ed7654366b363bb856eaf6b62~mv2.jpg/v1/fill/w_520,h_420,al_c,q_85,usm_0.66_1.00_0.01/256076_15225f5ed7654366b363bb856eaf6b62~mv2.webp'),
                               fit: BoxFit.cover,
                             )),
                         alignment: Alignment.center,
@@ -253,32 +243,22 @@ myContainer(
                             children: [
                               Text(
                                 name,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: mobile ? 30 : 40,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.white, fontSize: mobile ? 30 : 40, fontWeight: FontWeight.bold),
                               ),
                               Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Row(
                                     // crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
                                         'InStock: ',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: mobile ? 15 : 20),
+                                        style: TextStyle(color: Colors.white, fontSize: mobile ? 15 : 20),
                                       ),
                                       Text(
-                                        Numeral(snapshot.data['instock'])
-                                            .format(),
+                                        Numeral(snapshot.data['instock']).format(),
                                         // overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: mobile ? 40 : 50,
-                                            color: Colors.greenAccent,
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.greenAccent, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -287,16 +267,11 @@ myContainer(
                                     children: [
                                       Text(
                                         'Building: ',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: mobile ? 15 : 20),
+                                        style: TextStyle(color: Colors.white, fontSize: mobile ? 15 : 20),
                                       ),
                                       Text(
                                         snapshot.data['building'].toString(),
-                                        style: TextStyle(
-                                            fontSize: mobile ? 40 : 50,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.black, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   )
@@ -395,8 +370,7 @@ Widget myContainer1(BuildContext context, String name, String pid) {
                   color: Colors.blueGrey,
                   borderRadius: BorderRadius.circular(12),
                   image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                    image: NetworkImage('https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
                     fit: BoxFit.cover,
                   )),
             ),
@@ -451,8 +425,7 @@ Widget myContainer1(BuildContext context, String name, String pid) {
   );
 }
 
-Widget myTrashContainer(
-    BuildContext context, String name, String pid, int ttl) {
+Widget myTrashContainer(BuildContext context, String name, String pid, int ttl) {
   int days = (ttl / 86400).toInt();
   // Future a = HttpHelper().fetchItem(pid);
   return Container(
@@ -466,8 +439,7 @@ Widget myTrashContainer(
                 color: Colors.blueGrey,
                 borderRadius: BorderRadius.circular(12),
                 image: const DecorationImage(
-                  image: NetworkImage(
-                      'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                  image: NetworkImage('https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
                   fit: BoxFit.cover,
                 )),
           ),
@@ -491,8 +463,7 @@ Widget myTrashContainer(
                   Text(
                     // "${Numeral(instock).format()} InStock  ",
                     "$days days ",
-                    style:
-                        TextStyle(color: days > 10 ? Colors.green : Colors.red),
+                    style: TextStyle(color: days > 10 ? Colors.green : Colors.red),
                   ),
                 ],
               ),
@@ -547,8 +518,7 @@ Widget myTrashContainer(
                               // }
                             },
                             child: Text('delete'),
-                            style: TextButton.styleFrom(
-                                foregroundColor: Colors.red),
+                            style: TextButton.styleFrom(foregroundColor: Colors.red),
                           )
                         ],
                       );
@@ -608,9 +578,7 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               controller: _lastNameController,
               inputFormatters: [
                 TextInputFormatter.withFunction((oldValue, newValue) {
-                  return TextEditingValue(
-                      text: newValue.text.toLowerCase(),
-                      selection: newValue.selection);
+                  return TextEditingValue(text: newValue.text.toLowerCase(), selection: newValue.selection);
                 })
               ],
               decoration: InputDecoration(
@@ -691,8 +659,7 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               String password = _passwordController.text;
               // Do something with the user's information, such as save it to a database
               // Navigator.of(context).pop();
-              createAdmin(
-                  context, firstName, lastName, username, password, email);
+              createAdmin(context, firstName, lastName, username, password, email);
             }
           },
         ),
@@ -701,10 +668,8 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
   }
 }
 
-Future<int> createAdmin(BuildContext context, String f_name, String l_name,
-    String username, String password, String mail) async {
-  http.Response a =
-      await HttpHelper().createAdmin(f_name, l_name, username, password, mail);
+Future<int> createAdmin(BuildContext context, String f_name, String l_name, String username, String password, String mail) async {
+  http.Response a = await HttpHelper().createAdmin(f_name, l_name, username, password, mail);
   // final body = jsonDecode(a.body);
   if (a.statusCode == 201) {
     showDialog(
@@ -850,8 +815,7 @@ class _dialogForOrderState extends State<dialogForOrder> {
                   setState(() {
                     dateTime = value!;
                   });
-                  _dateController.text =
-                      '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                  _dateController.text = '${dateTime.day}/${dateTime.month}/${dateTime.year}';
                   print('setting state');
                 });
               },
@@ -874,7 +838,7 @@ class _dialogForOrderState extends State<dialogForOrder> {
             if (formKey.currentState!.validate()) {
               int continuity = int.parse(_continuityController.text);
               // remove(context);
-              createOrder(context, widget.pid, continuity);
+              createOrder(context, widget.pid, continuity, dateTime);
             }
           },
           child: Text('Save'),
@@ -885,10 +849,8 @@ class _dialogForOrderState extends State<dialogForOrder> {
   }
 }
 
-Future<int> createOrder(
-    BuildContext context, String pid, int continuity) async {
-  int status = await HttpHelper().createOrder(pid, continuity);
-
+Future<int> createOrder(BuildContext context, String pid, int continuity, DateTime date) async {
+  int status = await HttpHelper().createOrder(pid, continuity,date);
   showDialog(
       context: context,
       builder: (context) {
@@ -907,11 +869,13 @@ Future<int> createOrder(
                     },
                     child: Text('View'),
                   ),
-                  TextButton(onPressed: () {
-                    // remove(context);
-                    // remove(context);
-                    GoRouter.of(context).refresh();
-                  }, child: Text('Ok')),
+                  TextButton(
+                      onPressed: () {
+                        // remove(context);
+                        // remove(context);
+                        GoRouter.of(context).refresh();
+                      },
+                      child: Text('Ok')),
                 ],
               )
             : AlertDialog(
