@@ -808,8 +808,8 @@ class _dialogForOrderState extends State<dialogForOrder> {
               onTap: () {
                 showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
+                  initialDate: DateTime.now().add(Duration(hours: 3)),
+                  firstDate: DateTime.now().add(Duration(hours: 3)),
                   lastDate: DateTime(2100),
                 ).then((value) {
                   setState(() {

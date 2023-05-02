@@ -50,6 +50,7 @@ dev_dependencies:
   http: ^0.13.5
   numeral: ^2.0.1
   image_picker: ^0.8.7+1
+  table_calendar: ^3.0.9
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
