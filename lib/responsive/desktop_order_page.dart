@@ -55,113 +55,116 @@ class _DesktopOrderPageState extends State<DesktopOrderPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                      child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TableCalendar(
-                          focusedDay: today,
-                          selectedDayPredicate: (day) => isSameDay(day, today),
-                          headerStyle: HeaderStyle(formatButtonVisible: false, titleCentered: true),
-                          calendarStyle:
-                              CalendarStyle(selectedDecoration: BoxDecoration(color: Colors.blueGrey, shape: BoxShape.circle)),
-                          firstDay: DateTime.utc(2000, 1, 1),
-                          lastDay: DateTime.utc(2100, 1, 1),
-                          onDaySelected: (day, time) {
-                            setState(() {
-                              today = day;
-                              print(today);
-                              setAppbarTittleDate();
-                            });
-                          },
-                        ),
-                        Divider(),
-                        Container(padding: EdgeInsets.all(12), child: Text('completed order')),
-                        Container(
-                          padding: EdgeInsets.all(12),
-                          color: Colors.blueGrey[200],
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              SizedBox(
-                                width: 150,
-                                child: Text(
-                                  'Name',
+                      child: Container(
+                    color: Colors.blueGrey[50],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TableCalendar(
+                            focusedDay: today,
+                            selectedDayPredicate: (day) => isSameDay(day, today),
+                            headerStyle: HeaderStyle(formatButtonVisible: false, titleCentered: true),
+                            calendarStyle:
+                                CalendarStyle(selectedDecoration: BoxDecoration(color: Colors.blueGrey, shape: BoxShape.circle)),
+                            firstDay: DateTime.utc(2000, 1, 1),
+                            lastDay: DateTime.utc(2100, 1, 1),
+                            onDaySelected: (day, time) {
+                              setState(() {
+                                today = day;
+                                print(today);
+                                setAppbarTittleDate();
+                              });
+                            },
+                          ),
+                          Divider(),
+                          Container(padding: EdgeInsets.all(12), child: Text('completed order')),
+                          Container(
+                            padding: EdgeInsets.all(12),
+                            color: Colors.blueGrey[200],
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    'Name',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Text(
+                                  '  Date',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Text(
-                                '  Date',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'continuity',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                                Text(
+                                  'continuity',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Flexible(
-                          child: FutureBuilder(
-                              future: items,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: 1,
-                                      itemBuilder: (context, index) {
-                                        Map data = snapshot.data![index];
-                                        DateTime dateTime = DateTime.parse(data['timestamp']);
-                                        String day = dateTime.day.toString();
-                                        String month = dateTime.month.toString();
-                                        String year = dateTime.year.toString();
-                                        String pid = data['pid'];
-                                        String numbers = data['numbers'].toString();
-                                        return Container(
-                                          margin: EdgeInsets.all(5),
-                                          padding: EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                              color: Colors.blueGrey[100], borderRadius: BorderRadius.all(Radius.circular(12))),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: [
-                                              SizedBox(
-                                                width: 130,
-                                                child: InkWell(
-                                                  child: FutureBuilder(
-                                                      future: HttpHelper().fetchItemName(pid),
-                                                      builder: (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text('${snapshot.data['dname']}');
-                                                        } else {
-                                                          return Text('name');
-                                                        }
-                                                      }),
-                                                  onTap: () {
-                                                    GoRouter.of(context).push('/product/$pid');
-                                                  },
+                          Flexible(
+                            child: FutureBuilder(
+                                future: items,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          Map data = snapshot.data![index];
+                                          DateTime dateTime = DateTime.parse(data['timestamp']);
+                                          String day = dateTime.day.toString();
+                                          String month = dateTime.month.toString();
+                                          String year = dateTime.year.toString();
+                                          String pid = data['pid'];
+                                          String numbers = data['numbers'].toString();
+                                          return Container(
+                                            margin: EdgeInsets.all(5),
+                                            padding: EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueGrey[100], borderRadius: BorderRadius.all(Radius.circular(12))),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                SizedBox(
+                                                  width: 130,
+                                                  child: InkWell(
+                                                    child: FutureBuilder(
+                                                        future: HttpHelper().fetchItemName(pid),
+                                                        builder: (context, snapshot) {
+                                                          if (snapshot.hasData) {
+                                                            return Text('${snapshot.data['dname']}');
+                                                          } else {
+                                                            return Text('name');
+                                                          }
+                                                        }),
+                                                    onTap: () {
+                                                      GoRouter.of(context).push('/product/$pid');
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                              Text('$day/$month/$year'),
-                                              Text(numbers),
-                                              // IconButton(onPressed: (){}, icon: Icon(Icons.done))
-                                              // TextButton(
-                                              //     onPressed: () {}, child: Icon(Icons.done))
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                } else {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              }),
-                        ),
-                      ],
+                                                Text('$day/$month/$year'),
+                                                Text(numbers),
+                                                // IconButton(onPressed: (){}, icon: Icon(Icons.done))
+                                                // TextButton(
+                                                //     onPressed: () {}, child: Icon(Icons.done))
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                }),
+                          ),
+                        ],
+                      ),
                     ),
                   )),
                   Expanded(
@@ -230,7 +233,6 @@ class _DesktopOrderPageState extends State<DesktopOrderPage> {
                                                   child: FutureBuilder(
                                                       future: HttpHelper().fetchItemName(pid),
                                                       builder: (context, snapshot) {
-
                                                         if (snapshot.hasData) {
                                                           name = snapshot.data['dname'].toString();
                                                           return Text('${snapshot.data['dname']}');
@@ -245,13 +247,13 @@ class _DesktopOrderPageState extends State<DesktopOrderPage> {
                                                           return AlertDialog(
                                                             // title: Text('name'),
                                                             actions: [
-                                                              TextButton(onPressed: () {
-                                                                setAppbarTittleName(name.toString());
-                                                                setState(() {
-
-                                                                });
-                                                                remove(context);
-                                                              }, child: Text('view all orders')),
+                                                              TextButton(
+                                                                  onPressed: () {
+                                                                    setAppbarTittleName(name.toString());
+                                                                    setState(() {});
+                                                                    remove(context);
+                                                                  },
+                                                                  child: Text('view all orders')),
                                                               TextButton(
                                                                   onPressed: () {
                                                                     GoRouter.of(context).push('/product/$pid');
