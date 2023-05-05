@@ -9,19 +9,20 @@ import 'package:http/http.dart' as http;
 import 'package:inventory/helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory/helper.dart';
+
 class DesktopCreateProductPage extends StatefulWidget {
   const DesktopCreateProductPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<DesktopCreateProductPage> createState() =>
-      _DesktopCreateProductPageState();
+  State<DesktopCreateProductPage> createState() => _DesktopCreateProductPageState();
 }
 
 class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
   ImagePicker picker = ImagePicker();
   XFile? image;
+
   // List<int> selected = [];
   // List<int> select = [11,12,44,333,23,22, 21, 31, 41, 51, 61];
   List<int> selectedNumber = [];
@@ -39,7 +40,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(colorController.text.isEmpty){
+    if (colorController.text.isEmpty) {
       colorController.text = 'black';
     }
     double width = MediaQuery.of(context).size.width;
@@ -54,9 +55,9 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
           onPressed: () async {
             // setState(() {});
             if (formKey.currentState!.validate()) {
-              int aa = await HttpHelper().createItem(nameController.text,categoryController.text,colorController.text,selected,selectedNumber);
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')));
+              int aa = await HttpHelper()
+                  .createItem(nameController.text, categoryController.text, colorController.text, selected, selectedNumber);
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Processing Data')));
             }
           },
           backgroundColor: Colors.blueGrey,
@@ -83,8 +84,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  image = await ImagePicker()
-                                      .pickImage(source: ImageSource.gallery);
+                                  image = await ImagePicker().pickImage(source: ImageSource.gallery);
                                   setState(() {
                                     //update UI
                                   });
@@ -93,10 +93,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                   color: Colors.blueGrey,
                                   width: width / 9,
                                   height: width / 9,
-                                  child: Center(
-                                      child: image == null
-                                          ? Text('Select Image')
-                                          : Text(image!.name)),
+                                  child: Center(child: image == null ? Text('Select Image') : Text(image!.name)),
                                 ),
                               ),
 
@@ -109,8 +106,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                         padding: EdgeInsets.all(12),
                                         child: TextFormField(
                                           controller: nameController,
-                                          decoration: InputDecoration(
-                                              labelText: 'Product Name'),
+                                          decoration: InputDecoration(labelText: 'Product Name'),
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Enter name';
@@ -122,8 +118,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                         padding: EdgeInsets.all(12),
                                         child: TextFormField(
                                           controller: categoryController,
-                                          decoration: InputDecoration(
-                                              labelText: 'Category'),
+                                          decoration: InputDecoration(labelText: 'Category'),
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Enter Category';
@@ -136,8 +131,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                         child: TextFormField(
                                           controller: colorController,
                                           // initialValue: "black",
-                                          decoration: InputDecoration(
-                                              labelText: 'Color'),
+                                          decoration: InputDecoration(labelText: 'Color'),
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Enter name';
@@ -173,16 +167,12 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                         ? GridView.builder(
                                             itemCount: selected.length,
                                             shrinkWrap: true,
-                                            physics:
-                                                AlwaysScrollableScrollPhysics(),
+                                            physics: AlwaysScrollableScrollPhysics(),
                                             gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 4),
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
+                                                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: width < 1000 ? 2 : 4),
+                                            itemBuilder: (BuildContext context, int index) {
                                               return Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.all(8.0),
                                                 child: InkWell(
                                                   onTap: () {
                                                     print(index);
@@ -191,43 +181,25 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                         builder: (context) {
                                                           selectedController.text = selectedNumber[index].toString();
                                                           return AlertDialog(
-                                                            title: Text(
-                                                                '${selected[index]['dname']}'),
+                                                            title: Text('${selected[index]['dname']}'),
                                                             // icon: const Icon(Icons.),
-                                                            content:
-                                                                TextFormField(
+                                                            content: TextFormField(
                                                               autofocus: true,
 
-                                                              inputFormatters: <
-                                                                  TextInputFormatter>[
-                                                                FilteringTextInputFormatter
-                                                                    .allow(RegExp(
-                                                                        r'[0-9]')),
-                                                                TextInputFormatter
-                                                                    .withFunction(
-                                                                        (oldValue,
-                                                                            newValue) {
+                                                              inputFormatters: <TextInputFormatter>[
+                                                                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                                                TextInputFormatter.withFunction((oldValue, newValue) {
                                                                   // Disallow values that start with 0
-                                                                  if (newValue
-                                                                      .text
-                                                                      .startsWith(
-                                                                          '0')) {
+                                                                  if (newValue.text.startsWith('0')) {
                                                                     return oldValue;
                                                                   }
 
                                                                   try {
-                                                                    final int
-                                                                        parsed =
-                                                                        int.parse(
-                                                                            newValue.text);
-                                                                    if (parsed <
-                                                                        1) {
+                                                                    final int parsed = int.parse(newValue.text);
+                                                                    if (parsed < 1) {
                                                                       return oldValue;
                                                                     }
-                                                                    return newValue
-                                                                        .copyWith(
-                                                                            text:
-                                                                                parsed.toString());
+                                                                    return newValue.copyWith(text: parsed.toString());
                                                                   } on FormatException catch (exe) {
                                                                     print(exe);
                                                                     return newValue;
@@ -240,25 +212,17 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                               // initialValue:
                                                               //     '${selectedNumber[index]}',
                                                               controller: selectedController,
-                                                                  keyboardType:
-                                                                  TextInputType
-                                                                      .number,
+                                                              keyboardType: TextInputType.number,
                                                             ),
                                                             actions: [
                                                               TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    select.add(selected.removeAt(
-                                                                        index));
+                                                                  onPressed: () {
+                                                                    select.add(selected.removeAt(index));
                                                                     selectedNumber.removeAt(index);
                                                                     remove();
-                                                                    setState(
-                                                                        () {});
+                                                                    setState(() {});
                                                                   },
-                                                                  style: TextButton.styleFrom(
-                                                                      foregroundColor:
-                                                                          Colors
-                                                                              .red),
+                                                                  style: TextButton.styleFrom(foregroundColor: Colors.red),
                                                                   child: Text(
                                                                     'Remove',
                                                                     // style: TextStyle(
@@ -266,21 +230,14 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                                     //     ),
                                                                   )),
                                                               TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                      print(selectedController.text);
-                                                                      selectedNumber[index]=int.parse(selectedController.text);
+                                                                  onPressed: () {
+                                                                    print(selectedController.text);
+                                                                    selectedNumber[index] = int.parse(selectedController.text);
                                                                     remove();
-                                                                    setState(() {
-
-                                                                    });
+                                                                    setState(() {});
                                                                   },
-                                                                  style: TextButton.styleFrom(
-                                                                      foregroundColor:
-                                                                          Colors
-                                                                              .green),
-                                                                  child: Text(
-                                                                      'OK')),
+                                                                  style: TextButton.styleFrom(foregroundColor: Colors.green),
+                                                                  child: Text('OK')),
                                                             ],
                                                           );
                                                         });
@@ -288,58 +245,37 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            width: 3,
-                                                            color: Colors
-                                                                .blueGrey),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12)),
+                                                        border: Border.all(width: 3, color: Colors.blueGrey),
+                                                        borderRadius: BorderRadius.all(Radius.circular(12)),
                                                         image: const DecorationImage(
                                                             image: NetworkImage(
                                                                 'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
                                                             fit: BoxFit.fill)),
                                                     child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
+                                                      mainAxisAlignment: MainAxisAlignment.end,
                                                       children: [
                                                         Center(
                                                           child: Text(
                                                             '${selectedNumber[index]}',
-                                                          softWrap: false,
+                                                            softWrap: false,
                                                             overflow: TextOverflow.fade,
                                                             style: TextStyle(
-
-                                                                color: Colors.green,
-                                                                fontSize: 50,
-                                                                fontWeight: FontWeight.bold
-                                                            ),
+                                                                color: Colors.green, fontSize: 50, fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                         Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          12)),
-                                                              color: Colors
-                                                                  .blueGrey
-                                                                  .withOpacity(
-                                                                      0.5),
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                                                              color: Colors.blueGrey.withOpacity(0.5),
                                                             ),
-                                                            child: Center(
-                                                                child: Text(
-                                                                    '${selected[index]['dname']}'))),
+                                                            child: Center(child: Text('${selected[index]['dname']}'))),
                                                       ],
                                                     ),
                                                   ),
                                                 ),
                                               );
                                             })
-                                        : const Center(
-                                            child: Text('No item selected')),
+                                        : const Center(child: Text('No item selected')),
                                   ),
                                 ),
                               ),
@@ -350,54 +286,44 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                     height: height / 1.7,
                                     color: Colors.blueGrey[50],
                                     child: FutureBuilder(
-                                      future: items,
-                                        builder: (context,snapshot){
-                                        if(snapshot.hasData){
-                                          select = snapshot.data!;
-                                          return GridView.builder(
-                                              itemCount: select.length,
-                                              shrinkWrap: true,
-                                              physics:
-                                              AlwaysScrollableScrollPhysics(),
-                                              gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 5),
-                                              itemBuilder:
-                                                  (BuildContext context, int index) {
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      print(index);
-                                                      selected.add(select.removeAt(index));
-                                                      // selected.add(snapshot.data![index]);
-                                                      print(selected);
-                                                      selectedNumber.add(1);
-                                                      setState(() {});
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                              width: 3,
-                                                              color: index == 3
-                                                                  ? Colors.blue
-                                                                  : Colors.red),
-                                                          borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  12)),
-                                                          image: const DecorationImage(
-                                                              image: NetworkImage(
-                                                                  'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
-                                                              fit: BoxFit.fill)),
-                                                      child: Text('${snapshot.data![index]['dname']}'),
+                                        future: items,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            select = snapshot.data!;
+                                            return GridView.builder(
+                                                itemCount: select.length,
+                                                shrinkWrap: true,
+                                                physics: AlwaysScrollableScrollPhysics(),
+                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: width < 1000 ? 3 : 5),
+                                                itemBuilder: (BuildContext context, int index) {
+                                                  return Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        print(index);
+                                                        selected.add(select.removeAt(index));
+                                                        // selected.add(snapshot.data![index]);
+                                                        print(selected);
+                                                        selectedNumber.add(1);
+                                                        setState(() {});
+                                                      },
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(width: 3, colors: Colors.red),
+                                                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                                                            image: const DecorationImage(
+                                                                image: NetworkImage(
+                                                                    'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                                fit: BoxFit.fill)),
+                                                        child: Text('${snapshot.data![index]['dname']}'),
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                              });
-                                        }
-                                      return Center(child: CircularProgressIndicator());
-                                    }),
+                                                  );
+                                                });
+                                          }
+                                          return Center(child: CircularProgressIndicator());
+                                        }),
                                   ),
                                 ),
                               ),
