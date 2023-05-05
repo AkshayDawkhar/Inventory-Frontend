@@ -17,8 +17,8 @@ class _DesktopProductPage2State extends State<DesktopProductPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      child: Text('name'),
-    ));
+          child: Text('name'),
+        ));
   }
 }
 
@@ -118,10 +118,16 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
   }
 
   int values = 10;
+  int max=10000;
+  int recommended=0;
+  int buildingNumber=0;
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     void remove() {
       Navigator.of(context).pop();
     }
@@ -176,42 +182,42 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                   style: TextStyle(fontSize: width / 30),
                                                 ),
                                                 PopupMenuButton(
-                                                    // add icon, by default "3 dot" icon
-                                                    // icon: Icon(Icons.book)
+                                                  // add icon, by default "3 dot" icon
+                                                  // icon: Icon(Icons.book)
                                                     itemBuilder: (context) {
-                                                  return [
-                                                    PopupMenuItem<int>(
-                                                      value: 0,
-                                                      child: ListTile(
-                                                        leading: Icon(
-                                                          Icons.delete,
-                                                          color: Colors.red,
+                                                      return [
+                                                        PopupMenuItem<int>(
+                                                          value: 0,
+                                                          child: ListTile(
+                                                            leading: Icon(
+                                                              Icons.delete,
+                                                              color: Colors.red,
+                                                            ),
+                                                            title: Text('Delete'),
+                                                          ),
                                                         ),
-                                                        title: Text('Delete'),
-                                                      ),
-                                                    ),
-                                                    PopupMenuItem<int>(
-                                                      value: 1,
-                                                      child: ListTile(
-                                                        leading: Icon(
-                                                          Icons.edit,
-                                                          color: Colors.blue,
+                                                        PopupMenuItem<int>(
+                                                          value: 1,
+                                                          child: ListTile(
+                                                            leading: Icon(
+                                                              Icons.edit,
+                                                              color: Colors.blue,
+                                                            ),
+                                                            title: Text('Edit'),
+                                                          ),
                                                         ),
-                                                        title: Text('Edit'),
-                                                      ),
-                                                    ),
-                                                    PopupMenuItem<int>(
-                                                      value: 2,
-                                                      child: ListTile(
-                                                        leading: Icon(
-                                                          Icons.add,
-                                                          color: Colors.greenAccent,
+                                                        PopupMenuItem<int>(
+                                                          value: 2,
+                                                          child: ListTile(
+                                                            leading: Icon(
+                                                              Icons.add,
+                                                              color: Colors.greenAccent,
+                                                            ),
+                                                            title: Text('Order'),
+                                                          ),
                                                         ),
-                                                        title: Text('Order'),
-                                                      ),
-                                                    ),
-                                                  ];
-                                                }, onSelected: (value) {
+                                                      ];
+                                                    }, onSelected: (value) {
                                                   if (value == 0) {
                                                     showDialog(
                                                         context: context,
@@ -284,6 +290,8 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                       future: building,
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
+                                          buildingNumber = snapshot.data['building'];
+                                          recommended = snapshot.data['recommended'];
                                           return Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -328,6 +336,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                                       builder: (context, snapshot) {
                                                         print('----------> ${snapshot.data.toString()}');
                                                         if (snapshot.hasData) {
+                                                          max = int.parse(snapshot.data.toString());
                                                           return Text(
                                                             '${snapshot.data.toString()}',
                                                           );
@@ -632,29 +641,16 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           Container(
               margin: EdgeInsets.all(10),
               child: FloatingActionButton.extended(
+                heroTag: 'f1',
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          title: Text('build'),
-                          content: Slider(
-                            onChanged: (double value) {
-                              setState(() {
-                                values = value.round();
-                              });
-                            },
-                            value: values.toDouble(),
-                            min: 1,
-                            max: 30,
-                          ),
-                          // TextFormField(
-                          //   decoration: InputDecoration(labelText: 'build number'),
-                          // ),
-                          actions: [
-                            TextButton(onPressed: () {}, child: Text('cancel')),
-                            TextButton(onPressed: () {}, child: Text('Save')),
-                          ],
+                        return mySlider(
+                          name: 'Build',
+                          pid: widget.title,
+                          max: max,
+                          recommended: recommended,
                         );
                       });
                 },
@@ -668,12 +664,16 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
           Container(
               margin: EdgeInsets.all(5),
               child: FloatingActionButton.extended(
+                heroTag: 'f2',
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          title: Text('stock'),
+                        return mySlider(
+                          name: 'Stock',
+                          pid: widget.title,
+                          max: buildingNumber,
+                          recommended: recommended,
                         );
                       });
                 },

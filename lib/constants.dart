@@ -223,7 +223,8 @@ myContainer(BuildContext context, bool mobile, int index, String pid, String nam
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             image: const DecorationImage(
-                              image: NetworkImage('https://static.wixstatic.com/media/256076_15225f5ed7654366b363bb856eaf6b62~mv2.jpg/v1/fill/w_520,h_420,al_c,q_85,usm_0.66_1.00_0.01/256076_15225f5ed7654366b363bb856eaf6b62~mv2.webp'),
+                              image: NetworkImage(
+                                  'https://static.wixstatic.com/media/256076_15225f5ed7654366b363bb856eaf6b62~mv2.jpg/v1/fill/w_520,h_420,al_c,q_85,usm_0.66_1.00_0.01/256076_15225f5ed7654366b363bb856eaf6b62~mv2.webp'),
                               fit: BoxFit.cover,
                             )),
                         alignment: Alignment.center,
@@ -258,7 +259,8 @@ myContainer(BuildContext context, bool mobile, int index, String pid, String nam
                                       Text(
                                         Numeral(snapshot.data['instock']).format(),
                                         // overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.greenAccent, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: mobile ? 40 : 50, color: Colors.greenAccent, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -271,7 +273,8 @@ myContainer(BuildContext context, bool mobile, int index, String pid, String nam
                                       ),
                                       Text(
                                         snapshot.data['building'].toString(),
-                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.black, fontWeight: FontWeight.bold),
+                                        style: TextStyle(
+                                            fontSize: mobile ? 40 : 50, color: Colors.black, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   )
@@ -370,7 +373,8 @@ Widget myContainer1(BuildContext context, String name, String pid) {
                   color: Colors.blueGrey,
                   borderRadius: BorderRadius.circular(12),
                   image: const DecorationImage(
-                    image: NetworkImage('https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                    image: NetworkImage(
+                        'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
                     fit: BoxFit.cover,
                   )),
             ),
@@ -439,7 +443,8 @@ Widget myTrashContainer(BuildContext context, String name, String pid, int ttl) 
                 color: Colors.blueGrey,
                 borderRadius: BorderRadius.circular(12),
                 image: const DecorationImage(
-                  image: NetworkImage('https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                  image: NetworkImage(
+                      'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
                   fit: BoxFit.cover,
                 )),
           ),
@@ -850,7 +855,7 @@ class _dialogForOrderState extends State<dialogForOrder> {
 }
 
 Future<int> createOrder(BuildContext context, String pid, int continuity, DateTime date) async {
-  int status = await HttpHelper().createOrder(pid, continuity,date);
+  int status = await HttpHelper().createOrder(pid, continuity, date);
   showDialog(
       context: context,
       builder: (context) {
@@ -891,4 +896,140 @@ Future<int> createOrder(BuildContext context, String pid, int continuity, DateTi
       });
 
   return 1;
+}
+
+class mySlider extends StatefulWidget {
+  const mySlider({super.key, required this.max, required this.recommended, required this.name, required this.pid});
+
+  final String name;
+  final int max;
+  final int recommended;
+  final String pid;
+
+  @override
+  State<mySlider> createState() => _mySliderState();
+}
+
+class _mySliderState extends State<mySlider> {
+  double _currentSliderValue = 20;
+  TextEditingController _numberController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _numberController.text = widget.recommended.toString();
+    _currentSliderValue = widget.recommended.toDouble();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double max = widget.max.toDouble();
+    int recommnded = widget.recommended.toInt();
+    String name = widget.name;
+    return AlertDialog(
+      title: Text('Add $name'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            decoration: InputDecoration(labelText: 'numbers'),
+            autofocus: true,
+            controller: _numberController,
+            onChanged: (value) {
+              double value1 = double.parse(value);
+              if (value1 >= max) {
+                value1 = max;
+                _numberController.text = value1.toString();
+              }
+              _currentSliderValue = value1;
+
+              setState(() {});
+            },
+          ),
+          Slider(
+            value: _currentSliderValue,
+            max: max.toDouble(),
+            // divisions: 5,
+            label: _currentSliderValue.round().toString(),
+            onChanged: (double value) {
+              setState(() {
+                _currentSliderValue = value.round().toDouble();
+                _numberController.text = _currentSliderValue.toString();
+              });
+            },
+          ),
+        ],
+      ),
+      // TextFormField(
+      //   decoration: InputDecoration(labelText: 'build number'),
+      // ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              remove(context);
+            },
+            child: Text('cancel')),
+        TextButton(
+            onPressed: () async {
+              remove(context);
+              int i = 0;
+              if (name == 'Build') {
+                i = await buildItem(context, widget.pid, _currentSliderValue);
+              } else if (name == 'Stock') {
+                i = await stockItem(context, widget.pid, _currentSliderValue);
+              }
+            },
+            child: Text('Add')),
+      ],
+    );
+  }
+}
+
+Future<int> buildItem(BuildContext context, String pid, double buildNo) async {
+  int statusCode = await HttpHelper().addBuild(pid, buildNo.toInt());
+  print('build -----------> $statusCode');
+  if (statusCode == 200) {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('product added to build successfully'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    remove(context);
+                    remove(context);
+                    GoRouter.of(context).refresh();
+                  },
+                  child: Text('ok'))
+            ],
+          );
+        });
+  }
+  return 12;
+}
+
+Future<int> stockItem(BuildContext context, String pid, double stockNo) async {
+  int statusCode = await HttpHelper().addStock(pid, stockNo.toInt());
+  print('stock ---------> $statusCode');
+  if (statusCode == 226) {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('product added to stock successfully'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    remove(context);
+                    remove(context);
+                    GoRouter.of(context).refresh();
+                  },
+                  child: Text('ok'))
+            ],
+          );
+        });
+  }
+  return 12;
 }

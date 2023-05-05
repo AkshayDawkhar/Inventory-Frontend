@@ -223,5 +223,34 @@ class HttpHelper {
     print('creating order ${responce.body}');
     return responce.statusCode;
   }
+  Future<int> addBuild(String pid,int buildNo) async {
+    // int time =  1681371419;
 
+    // await Future.delayed(Duration(seconds: 5));
+    final url = Uri.parse('$HOSTNAME/build/$pid');
+    final responce = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'build_no':buildNo
+        }));
+    print('adding build ${responce.body}');
+    return responce.statusCode;
+  }
+  Future<int> addStock(String pid,int stockNo) async {
+    // int time =  1681371419;
+
+    // await Future.delayed(Duration(seconds: 5));
+    final url = Uri.parse('$HOSTNAME/build/stock/$pid');
+    final responce = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'stock_no':stockNo
+        }));
+    print('adding build ${responce.body}');
+    return responce.statusCode;
+  }
 }
