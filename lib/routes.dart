@@ -22,6 +22,7 @@ import 'responsive/desktop_trash_page.dart';
 import 'responsive/mobile_trash_page.dart';
 import 'responsive/desktop_products_page.dart';
 import 'responsive/mobile_trash_product_page.dart';
+import 'login.dart';
 
 GoRouter goRouter = GoRouter(routes: [
   GoRoute(
@@ -45,30 +46,22 @@ GoRouter goRouter = GoRouter(routes: [
   GoRoute(
       path: '/analysis',
       builder: (BuildContext context, GoRouterState state) {
-        return ResponsiveLayout(
-            desktopScaffold: DesktopAnalysis(),
-            mobileScaffold: MobileAnalysis());
+        return ResponsiveLayout(desktopScaffold: DesktopAnalysis(), mobileScaffold: MobileAnalysis());
       }),
   GoRoute(
       path: '/account',
       builder: (BuildContext context, GoRouterState state) {
-        return ResponsiveLayout(
-            desktopScaffold: DesktopAccountPage(),
-            mobileScaffold: MobileAccountPage());
+        return ResponsiveLayout(desktopScaffold: DesktopAccountPage(), mobileScaffold: MobileAccountPage());
       }),
   GoRoute(
       path: '/order',
       builder: (BuildContext context, GoRouterState state) {
-        return ResponsiveLayout(
-            desktopScaffold: DesktopOrderPage(),
-            mobileScaffold: MobileOrderPage());
+        return ResponsiveLayout(desktopScaffold: DesktopOrderPage(), mobileScaffold: MobileOrderPage());
       }),
   GoRoute(
     path: '/product',
     builder: (BuildContext context, GoRouterState state) {
-      return ResponsiveLayout(
-          desktopScaffold: DesktopProductsPage(),
-          mobileScaffold: MobileProductsPage());
+      return ResponsiveLayout(desktopScaffold: DesktopProductsPage(), mobileScaffold: MobileProductsPage());
     },
     routes: [
       GoRoute(
@@ -78,10 +71,9 @@ GoRouter goRouter = GoRouter(routes: [
                 desktopScaffold: DesktopCreateProductPage(
                   title: 'new',
                 ),
-                mobileScaffold: MobileScaffold(
-                    body: MobileCreateProductPage(
+                mobileScaffold: MobileCreateProductPage(
                   title: 'new',
-                )));
+                ));
           }),
       GoRoute(
           path: ':name',
@@ -91,26 +83,22 @@ GoRouter goRouter = GoRouter(routes: [
                 desktopScaffold: DesktopProductPage(
                   title: name,
                 ),
-                mobileScaffold: MobileScaffold(
-                    body: MobileProductPage(
-                  title: name,
-                )));
+                mobileScaffold: MobileProductPage(
+                  title: '$name',
+                ));
           }),
     ],
   ),
   GoRoute(
       path: '/trash',
       builder: (BuildContext context, GoRouterState state) {
-        return ResponsiveLayout(
-            desktopScaffold: DesktopTrash(), mobileScaffold: MobileTrash());
+        return ResponsiveLayout(desktopScaffold: DesktopTrash(), mobileScaffold: MobileTrash());
       },
       routes: [
         GoRoute(
             path: 'product',
             builder: (BuildContext context, GoRouterState state) {
-              return ResponsiveLayout(
-                  desktopScaffold: DesktopTrash(),
-                  mobileScaffold: MobileTrash());
+              return ResponsiveLayout(desktopScaffold: DesktopTrash(), mobileScaffold: MobileTrash());
             },
             routes: [
               GoRoute(
@@ -118,7 +106,9 @@ GoRouter goRouter = GoRouter(routes: [
                 builder: (BuildContext context, GoRouterState state) {
                   String name = state.params['name']!;
                   return ResponsiveLayout(
-                      desktopScaffold: DesktopTrashProductPage(title: name,),
+                      desktopScaffold: DesktopTrashProductPage(
+                        title: name,
+                      ),
                       mobileScaffold: MobileTrash());
                 },
               )
@@ -126,19 +116,21 @@ GoRouter goRouter = GoRouter(routes: [
         GoRoute(
             path: 'user',
             builder: (BuildContext context, GoRouterState state) {
-              return ResponsiveLayout(
-                  desktopScaffold: DesktopTrash(),
-                  mobileScaffold: MobileTrash());
+              return ResponsiveLayout(desktopScaffold: DesktopTrash(), mobileScaffold: MobileTrash());
             },
             routes: [
               GoRoute(
                 path: ':pid',
                 builder: (BuildContext context, GoRouterState state) {
-                  return ResponsiveLayout(
-                      desktopScaffold: DesktopTrash(),
-                      mobileScaffold: MobileTrash());
+                  return ResponsiveLayout(desktopScaffold: DesktopTrash(), mobileScaffold: MobileTrash());
                 },
               )
             ])
       ]),
+  GoRoute(
+    path: '/login',
+    builder: (BuildContext context, GoRouterState state) {
+      return ResponsiveLayout(desktopScaffold: LoginPage(), mobileScaffold: LoginPage());
+    },
+  )
 ]);

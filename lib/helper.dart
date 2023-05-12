@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class HttpHelper {
-  String HOSTNAME = 'http://127.0.0.1:8000';
+  static String HOSTNAME = 'http://192.168.43.45:8000';
   Future<List> fetchItems() async {
     List<Map> items = [{}, {}];
     // Uri url = Uri.parse('$HOSTNAME/product/');

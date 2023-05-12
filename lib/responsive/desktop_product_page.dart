@@ -38,10 +38,14 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
   late Future Needed;
   late Future Max;
   String _message = '';
+  Text blackText(String value) => Text(
+    '$value',
+    style: TextStyle(color: Colors.black),
+  );
 
   Future<void> deleteProduct(String pid) async {
     final response = await http.delete(
-      Uri.parse('http://127.0.0.1:8000/product/$pid'),
+      Uri.parse('${HttpHelper.HOSTNAME}/product/$pid'),
     );
     // final response = HttpHelper().deleteproduct(pid);
     if (response.statusCode == 202) {
@@ -157,7 +161,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(
-                                      'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                                      '${HttpHelper.HOSTNAME}/static/${widget.title}.png'),
                                 )),
                           ),
                         ),
@@ -179,6 +183,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                               children: [
                                                 Text(
                                                   '${snapshot.data['dname']}',
+                                                  overflow: TextOverflow.clip,
                                                   style: TextStyle(fontSize: width / 30),
                                                 ),
                                                 PopupMenuButton(
@@ -298,50 +303,50 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
-                                                  Text('InStock:'),
-                                                  Text('${snapshot.data['instock']}'),
+                                                  blackText('InStock:'),
+                                                  blackText('${snapshot.data['instock']}'),
                                                 ],
                                               ),
                                               Divider(),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
-                                                  Text('Building:'),
-                                                  Text('${snapshot.data['building']}'),
+                                                  blackText('Building:'),
+                                                  blackText('${snapshot.data['building']}'),
                                                 ],
                                               ),
                                               Divider(),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
-                                                  Text('Needed:'),
-                                                  Text('${snapshot.data['needed']}'),
+                                                  blackText('Needed:'),
+                                                  blackText('${snapshot.data['needed']}'),
                                                 ],
                                               ),
                                               Divider(),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
-                                                  Text('Recommended:'),
-                                                  Text('${snapshot.data['recommended']}'),
+                                                  blackText('Recommended:'),
+                                                  blackText('${snapshot.data['recommended']}'),
                                                 ],
                                               ),
                                               Divider(),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
-                                                  Text('MAX build:'),
+                                                  blackText('MAX build:'),
                                                   FutureBuilder(
                                                       future: Max,
                                                       builder: (context, snapshot) {
                                                         print('----------> ${snapshot.data.toString()}');
                                                         if (snapshot.hasData) {
                                                           max = int.parse(snapshot.data.toString());
-                                                          return Text(
+                                                          return blackText(
                                                             '${snapshot.data.toString()}',
                                                           );
                                                         } else {
-                                                          return Text('-');
+                                                          return blackText('-');
                                                         }
                                                       })
                                                 ],
@@ -354,7 +359,7 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                           );
                                         }
                                       }),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -398,9 +403,9 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                       decoration: BoxDecoration(
                                           border: Border.all(width: 3, color: Colors.blueGrey),
                                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                                          image: const DecorationImage(
+                                          image:  DecorationImage(
                                               image: NetworkImage(
-                                                  'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                  '${HttpHelper.HOSTNAME}/static/${a['rid']}.png'),
                                               fit: BoxFit.fill)),
                                       child: FutureBuilder(
                                           future: HttpHelper().fetchItem1(a['rid']),
@@ -499,9 +504,9 @@ class _DesktopProductPageState extends State<DesktopProductPage> {
                                       decoration: BoxDecoration(
                                           border: Border.all(width: 3, color: Colors.blueGrey),
                                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                                          image: const DecorationImage(
+                                          image: DecorationImage(
                                               image: NetworkImage(
-                                                  'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                  '${HttpHelper.HOSTNAME}/static/${a['pid']}.png'),
                                               fit: BoxFit.fill)),
                                       child: FutureBuilder(
                                           future: HttpHelper().fetchItem1(a['pid']),

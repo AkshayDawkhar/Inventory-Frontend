@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -247,9 +244,9 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                     decoration: BoxDecoration(
                                                         border: Border.all(width: 3, color: Colors.blueGrey),
                                                         borderRadius: BorderRadius.all(Radius.circular(12)),
-                                                        image: const DecorationImage(
+                                                        image: DecorationImage(
                                                             image: NetworkImage(
-                                                                'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                                'http://127.0.0.1:8000/static/${selected[index]['pid']}.png'),
                                                             fit: BoxFit.fill)),
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -310,11 +307,11 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                       },
                                                       child: Container(
                                                         decoration: BoxDecoration(
-                                                            border: Border.all(width: 3, colors: Colors.red),
+                                                            border: Border.all(width: 3, color: Colors.red),
                                                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                                                            image: const DecorationImage(
+                                                            image:  DecorationImage(
                                                                 image: NetworkImage(
-                                                                    'https://static.wixstatic.com/media/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.png/v1/fill/w_520,h_420,al_c,lg_1,q_90/256076_a805139bd88749a8a2fe5dfcb954dc3c~mv2.webp'),
+                                                                    'http://127.0.0.1:8000/static/${snapshot.data![index]['pid']}.png'),
                                                                 fit: BoxFit.fill)),
                                                         child: Text('${snapshot.data![index]['dname']}'),
                                                       ),

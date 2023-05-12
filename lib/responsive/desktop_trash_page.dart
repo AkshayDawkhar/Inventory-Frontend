@@ -103,9 +103,9 @@ class _DesktopTrashState extends State<DesktopTrash> {
                                               color: Colors.blueGrey,
                                               borderRadius:
                                                   BorderRadius.circular(12),
-                                              image: const DecorationImage(
+                                              image:  DecorationImage(
                                                 image: NetworkImage(
-                                                    'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                                                    'http://127.0.0.1:8000/static/$pid.png'),
                                                 fit: BoxFit.cover,
                                               )),
                                         ),

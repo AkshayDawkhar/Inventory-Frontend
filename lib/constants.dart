@@ -73,7 +73,7 @@ myAppBar(String title) => AppBar(
       backgroundColor: Colors.blueGrey[700],
     );
 // int ii = 0;
-String s = 'http://127.0.0.1:8000/product/';
+String s = '${HttpHelper.HOSTNAME}/product/';
 
 myDrawer(BuildContext context, int selected) => Drawer(
       // backgroundColor: myBackgroundColor,
@@ -157,6 +157,20 @@ myDrawer(BuildContext context, int selected) => Drawer(
               ),
               title: Text(
                 'T R A S H',
+                style: TextStyle(color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
+              ),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
+                return GoRouter.of(context).go('/login');
+              },
+              leading: Icon(
+                Icons.logout,
+                color: selected == 5 ? Colors.black : Colors.blueGrey[500],
+              ),
+              title: Text(
+                'L O G O U T',
                 style: TextStyle(color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
@@ -350,9 +364,9 @@ var bottomNavigationBarItems = const [
       label: 'orders'),
   BottomNavigationBarItem(
       icon: Icon(
-        Icons.add_box,
+        Icons.list_alt_rounded,
       ),
-      label: 'create'),
+      label: 'products'),
 // BottomNavigationBarItem(icon: Icon(Icons.add_box,color: Colors.blueGrey,), label: 'create'),
 ];
 
@@ -372,9 +386,8 @@ Widget myContainer1(BuildContext context, String name, String pid) {
               decoration: BoxDecoration(
                   color: Colors.blueGrey,
                   borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://static.wixstatic.com/media/256076_689c3b907b5441248756c0b36f553cc4~mv2.jpeg/v1/fill/w_1276,h_727,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/8100.jpeg'),
+                  image: DecorationImage(
+                    image: NetworkImage('${HttpHelper.HOSTNAME}/static/$pid.png'),
                     fit: BoxFit.cover,
                   )),
             ),
@@ -1033,3 +1046,41 @@ Future<int> stockItem(BuildContext context, String pid, double stockNo) async {
   }
   return 12;
 }
+
+BottomNavigationBar myBottomNavigationBar(BuildContext context, int index) => BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.white,
+      backgroundColor: Colors.blueGrey[700],
+      currentIndex: index,
+      onTap: (index) {
+        print(index);
+        if (index == 0) {
+          GoRouter.of(context).go('/home');
+        } else if (index == 1) {
+          GoRouter.of(context).go('/analysis');
+        } else if (index == 2) {
+          GoRouter.of(context).go('/order');
+        } else if (index == 3) {
+          GoRouter.of(context).go('/product');
+        }
+//         setState(() {
+//           _currentIndex = aa;
+// // GoRouter.of(context).go('/analysis');
+//         });
+// return GoRouter.of(context).go('/you/${aa + 1}');
+// return context.go('you/12');
+      },
+      items: bottomNavigationBarItems,
+    );
+
+List<String> categoryItems =<String>[
+  'power amplifiers',
+  'installation-speakers',
+  'microphones',
+  'media player',
+  'headphone',
+  'subwoofers',
+  'setup-wiring'
+]
+;
