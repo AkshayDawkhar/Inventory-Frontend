@@ -52,6 +52,7 @@ dev_dependencies:
   image_picker: ^0.8.7+1
   table_calendar: ^3.0.9
   fl_chart: ^0.62.0
+  liquid_pull_to_refresh: ^3.0.1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

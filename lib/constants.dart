@@ -1082,5 +1082,4 @@ List<String> categoryItems =<String>[
   'headphone',
   'subwoofers',
   'setup-wiring'
-]
-;
+];

@@ -13,6 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.blueGrey[200],
       body: Center(
@@ -38,27 +39,35 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 148.0,
                 ),
-                TextFormField(
-                  controller: _usernameController,
-                  onChanged: (context){
-                    setState(() {
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _usernameController,
 
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Username',
+                        validator: (value){
+                          if(_usernameController.value != 'akshay987'){
+                            return 'Please enter valid username';
+                          }
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Username',
 
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -66,7 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    GoRouter.of(context).go('/');
+                    if(_formKey.currentState!.validate()) {
+                      GoRouter.of(context).go('/');
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.all(12),
