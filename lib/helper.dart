@@ -19,6 +19,23 @@ class HttpHelper {
     return json;
   }
 
+  Future<List> fetchCategoryItems(String category) async {
+
+    final url = Uri.parse('$HOSTNAME/product/?category=$category');
+    print(url);
+    final responce = await http.get(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        // body: jsonEncode({
+        //   "category":category
+        // })
+        );
+    final a = await http.get(url);
+    print(a.body);
+    final json = jsonDecode(a.body);
+    return json;
+  }
   Future fetchItem(String pid) async {
     // await Future.delayed(Duration(seconds: 4));
     final url = Uri.parse('$HOSTNAME/build/edit/$pid');
@@ -253,4 +270,27 @@ class HttpHelper {
     print('adding build ${responce.body}');
     return responce.statusCode;
   }
+
+  Future<List> fetchCategory() async {
+    final url = Uri.parse('$HOSTNAME/product/category/');
+    final a = await http.get(url);
+    await Future.delayed(Duration(seconds: 5));
+    final json = jsonDecode(a.body);
+    print(json);
+    return json;
+  }
+  Future<int> createCategory(String name) async {
+    // int time =  1681371419;
+    final url = Uri.parse('$HOSTNAME/product/category/');
+    final responce = await http.post(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+        'category':name
+        }));
+    print(responce.statusCode);
+    return responce.statusCode;
+  }
+
 }

@@ -273,8 +273,7 @@ myContainer(BuildContext context, bool mobile, int index, String pid, String nam
                                       Text(
                                         Numeral(snapshot.data['instock']).format(),
                                         // overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: mobile ? 40 : 50, color: Colors.greenAccent, fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.greenAccent, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
@@ -287,8 +286,7 @@ myContainer(BuildContext context, bool mobile, int index, String pid, String nam
                                       ),
                                       Text(
                                         snapshot.data['building'].toString(),
-                                        style: TextStyle(
-                                            fontSize: mobile ? 40 : 50, color: Colors.black, fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: mobile ? 40 : 50, color: Colors.black, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   )
@@ -1074,8 +1072,8 @@ BottomNavigationBar myBottomNavigationBar(BuildContext context, int index) => Bo
       items: bottomNavigationBarItems,
     );
 
-List<String> categoryItems =<String>[
-  'power amplifiers',
+List<String> categoryItems = <String>[
+  'Power Amplifier',
   'installation-speakers',
   'microphones',
   'media player',
@@ -1083,3 +1081,69 @@ List<String> categoryItems =<String>[
   'subwoofers',
   'setup-wiring'
 ];
+
+AppBar createAppBar(BuildContext context) {
+  TextEditingController categoryName = TextEditingController();
+  return AppBar(
+    title: Text('NEW'),
+    actions: [
+      PopupMenuButton(
+        itemBuilder: (context) {
+          return [
+            PopupMenuItem(
+                value: 0,
+                child: ListTile(
+                  leading: Icon(Icons.add),
+                  title: Text('category'),
+                ))
+          ];
+        },
+        onSelected: (value) {
+          if (value == 0) {
+            print('----------> object');
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('ADD Category'),
+                    content: TextFormField(
+                      controller:categoryName ,
+                      decoration: InputDecoration(hintText: 'name'),
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () async {
+                            await createCategory(context, categoryName.text);
+                          },
+                          child: Text('create'))
+                    ],
+                  );
+                });
+          }
+        },
+      )
+    ],
+  );
+}
+
+Future<bool> createCategory(BuildContext context, String name) async {
+  int res = await HttpHelper().createCategory(name);
+  if (res == 200) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Category created'),
+          );
+        });
+  }else{
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Category not created'),
+          );
+        });
+  }
+  return true;
+}

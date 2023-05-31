@@ -47,7 +47,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
     }
 
     return Scaffold(
-        appBar: myAppBar('CREATE NEW PRODUCT'),
+        appBar: createAppBar(context),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
             // setState(() {});
@@ -246,7 +246,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                         borderRadius: BorderRadius.all(Radius.circular(12)),
                                                         image: DecorationImage(
                                                             image: NetworkImage(
-                                                                'http://127.0.0.1:8000/static/${selected[index]['pid']}.png'),
+                                                                '${HttpHelper.HOSTNAME}/static/${selected[index]['pid']}.png'),
                                                             fit: BoxFit.fill)),
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -311,7 +311,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                             borderRadius: BorderRadius.all(Radius.circular(12)),
                                                             image:  DecorationImage(
                                                                 image: NetworkImage(
-                                                                    'http://127.0.0.1:8000/static/${snapshot.data![index]['pid']}.png'),
+                                                                    '${HttpHelper.HOSTNAME}/static/${snapshot.data![index]['pid']}.png'),
                                                                 fit: BoxFit.fill)),
                                                         child: Text('${snapshot.data![index]['dname']}'),
                                                       ),
