@@ -21,7 +21,8 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
     // super.initState();
     // items= ;
     // Future.delayed(Duration(seconds: 10));
-    items = HttpHelper().fetchItems();
+    // items = HttpHelper().fetchItems();
+    items = HttpHelper().fetchBuildingItems();
     print('object');
   }
   @override
@@ -52,7 +53,7 @@ class _DesktopScaffoldState extends State<DesktopScaffold> {
                           itemBuilder: (BuildContext context, int index) {
                             Map a = snapshot.data!.elementAt(index);
                             // return cen(snapshot.data!.elementAt(index)['pid'].toString());
-                            return myContainer1(context,a['dname'],a['pid']);
+                            return myContainer2(context,a['dname'],a['pid'],a['building'],a['instock']);
                             // return myContainer(context, false, index,snapshot.data!.elementAt(index)['pid'].toString(),snapshot.data!.elementAt(index)['dname'].toString());
                           })
                   )

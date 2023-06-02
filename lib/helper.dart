@@ -293,5 +293,14 @@ class HttpHelper {
     print(responce.statusCode);
     return responce.statusCode;
   }
+  Future<List> fetchBuildingItems() async {
+    final url = Uri.parse('$HOSTNAME/build/building');
+    // await Future.delayed(Duration(seconds: 1));
+    final a = await http.get(url);
+    print(a.statusCode);
+    print(a.body);
+    final json = jsonDecode(a.body);
+    return json;
+  }
 
 }

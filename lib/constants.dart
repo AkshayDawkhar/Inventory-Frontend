@@ -440,6 +440,65 @@ Widget myContainer1(BuildContext context, String name, String pid) {
   );
 }
 
+Widget myContainer2(BuildContext context,String name, String pid,int building, int inStock) {
+  // Future a = HttpHelper().fetchItem(pid);
+  return InkWell(
+    onTap: () {
+      GoRouter.of(context).push('/product/$pid');
+    },
+    child: Container(
+      // padding: EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: NetworkImage('${HttpHelper.HOSTNAME}/static/$pid.png'),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 5.0),
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 5.0),
+              Row(
+                children: [
+                  Text(
+                    "${Numeral(inStock).format()} InStock  ",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                  Icon(
+                    Icons.circle,
+                    color: Colors.blueGrey,
+                    size: 10,
+                  ),
+                  Text(
+                    "  ${Numeral(building).format()} Building  ",
+                    style: TextStyle(color: Colors.blueGrey),
+                  ),
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
 Widget myTrashContainer(BuildContext context, String name, String pid, int ttl) {
   int days = (ttl / 86400).toInt();
   // Future a = HttpHelper().fetchItem(pid);
@@ -675,7 +734,7 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               String password = _passwordController.text;
               // Do something with the user's information, such as save it to a database
               // Navigator.of(context).pop();
-              createAccount(context, mode,firstName, lastName, username, password, email);
+              createAccount(context, mode, firstName, lastName, username, password, email);
             }
           },
         ),
@@ -684,8 +743,8 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
   }
 }
 
-Future<int> createAccount(BuildContext context,String mode, String f_name, String l_name, String username, String password, String mail) async {
-  http.Response a = await HttpHelper().createAccount(mode,f_name, l_name, username, password, mail);
+Future<int> createAccount(BuildContext context, String mode, String f_name, String l_name, String username, String password, String mail) async {
+  http.Response a = await HttpHelper().createAccount(mode, f_name, l_name, username, password, mail);
   // final body = jsonDecode(a.body);
   if (a.statusCode == 201) {
     showDialog(
@@ -1107,7 +1166,7 @@ AppBar createAppBar(BuildContext context) {
                   return AlertDialog(
                     title: Text('ADD Category'),
                     content: TextFormField(
-                      controller:categoryName ,
+                      controller: categoryName,
                       decoration: InputDecoration(hintText: 'name'),
                     ),
                     actions: [
@@ -1136,7 +1195,7 @@ Future<bool> createCategory(BuildContext context, String name) async {
             title: Text('Category created'),
           );
         });
-  }else{
+  } else {
     showDialog(
         context: context,
         builder: (context) {
