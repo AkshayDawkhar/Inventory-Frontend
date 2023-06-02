@@ -3,98 +3,77 @@ import 'package:inventory/routes.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
-    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.blueGrey[200],
       body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            constraints: BoxConstraints(maxWidth: 500),
-            margin: width <= 600 ? EdgeInsets.all(12) : EdgeInsets.all(90),
-            decoration: BoxDecoration(
-              color: Colors.blueGrey,
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blueGrey,
-                  blurRadius: 1000.0,
-                ),
-              ],
-            ),
-            padding: EdgeInsets.all(16.0),
+        child: Container(
+          margin: EdgeInsets.all(12),
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(color: Colors.blueGrey[300], borderRadius: BorderRadius.circular(12)),
+          constraints: BoxConstraints(maxWidth: 500),
+          child: Form(
+            key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text('WELCOME ${_usernameController.text}',style: TextStyle(fontSize: 30),),
-                SizedBox(
-                  height: 148.0,
+                Text(
+                  'WELLCOME',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _usernameController,
-
-                        validator: (value){
-                          if(_usernameController.value != 'akshay987'){
-                            return 'Please enter valid username';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ],
+                SizedBox(
+                  height: 35,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Username', border: OutlineInputBorder()),
+                  validator: (value) => value!.isEmpty ? 'Enter username' : null,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  obscureText: true,
+                  // obscuringCharacter: '!',
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
                   ),
+                  validator: (String? value) => value!.length < 8 ? 'Enter valid password' : null,
                 ),
-                SizedBox(
-                  height: 24.0,
-                ),
-                TextButton(
-                  onPressed: () {
-                    if(_formKey.currentState!.validate()) {
-                      GoRouter.of(context).go('/');
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(
-                          color: Colors.greenAccent,
-                        )),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [Icon(Icons.login), Text('     Login')],
+                SizedBox(height: 25),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey,
+                      // foregroundColor: Colors.red,
                     ),
-                  ),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.greenAccent,
-                  ),
-                ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(backgroundColor: Colors.red, content: Text('12')));
+                        GoRouter.of(context).go('/');
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.logout),
+                          Text('  Login'),
+                        ],
+                      ),
+                    ))
               ],
             ),
           ),
