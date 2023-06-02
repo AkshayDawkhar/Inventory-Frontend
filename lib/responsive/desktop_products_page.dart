@@ -13,6 +13,10 @@ class DesktopProductsPage extends StatefulWidget {
 
 class _DesktopProductsPageState extends State<DesktopProductsPage> {
   late Future<List> items;
+  String selectedCategory = 'All';
+  late Future<List> categories;
+  late List categoryItemss;
+  TextEditingController editController = TextEditingController();
 
   @override
   void initState() {
@@ -21,9 +25,11 @@ class _DesktopProductsPageState extends State<DesktopProductsPage> {
     // items= ;
     // Future.delayed(Duration(seconds: 10));
     items = HttpHelper().fetchItems();
-    print('object');
+    // var category =  HttpHelper().fetchCategory();
+    // print('${category.then((value) => value[0]['id'])}');
+    // print('${category}');
+    categories = HttpHelper().fetchCategory();
   }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -60,16 +66,62 @@ class _DesktopProductsPageState extends State<DesktopProductsPage> {
                           SizedBox(
                             width: 1000,
                             height: 50,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: categoryItems.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                      margin: EdgeInsets.all(12),
-                                      padding: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          color: Colors.blueGrey, borderRadius: BorderRadius.all(Radius.circular(6))),
-                                      child: Text('${categoryItems[index]}'));
+                            child: FutureBuilder(
+                                future: categories,
+                                builder: (context, snapshot2) {
+                                  if (snapshot2.hasData) {
+                                    categoryItemss = snapshot2.data!;
+                                    print('-------------------->$categoryItemss');
+                                    return ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: categoryItemss.length,
+                                        itemBuilder: (context, index) {
+                                          String category = categoryItemss[index]['category'].toString();
+                                          return InkWell(
+                                            onLongPress: () {
+                                              editController.text = '$category';
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Text('Edit'),
+                                                      content: TextFormField(
+                                                        controller: editController,
+                                                        decoration: InputDecoration(hintText: 'name'),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {},
+                                                          child: Text('remove'),
+                                                          style: TextButton.styleFrom(foregroundColor: Colors.red),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {},
+                                                          child: Text('ok'),
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            onTap: () {
+                                              selectedCategory = category;
+                                              print('$category');
+                                              setState(() {
+                                                items = HttpHelper().fetchCategoryItems('$category');
+                                              });
+                                            },
+                                            child: Container(
+                                                margin: EdgeInsets.all(12),
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(color: Colors.blueGrey, borderRadius: BorderRadius.all(Radius.circular(6))),
+                                                child: Text('${categoryItemss[index]['category']}')),
+                                          );
+                                        });
+                                  } else {
+                                    return Center(
+                                      child: Text('categories'),
+                                    );
+                                  }
                                 }),
                           ),
                           Container(padding: EdgeInsets.all(15),child: Text('Power Amplifiers',style: TextStyle(fontSize: 40),)),
