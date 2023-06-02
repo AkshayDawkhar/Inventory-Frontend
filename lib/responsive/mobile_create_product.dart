@@ -6,6 +6,8 @@ import 'package:inventory/helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory/helper.dart';
 
+List<String> list = <String>[];
+
 class MobileCreateProductPage extends StatefulWidget {
   const MobileCreateProductPage({super.key, required this.title});
 
@@ -33,6 +35,21 @@ class _MobileCreateProductPageState extends State<MobileCreateProductPage> {
 
   final formKey = GlobalKey<FormState>();
   int count = 8;
+
+  getCategory() async {
+    List categories = await HttpHelper().fetchCategory();
+    list = categories.map((e) => e['category'].toString()).toList();
+    print('$list');
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // List categories = await HttpHelper().fetchCategory();
+    // print('$categories');
+    // getCategory();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,17 +118,46 @@ class _MobileCreateProductPageState extends State<MobileCreateProductPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.all(12),
-                          child: TextFormField(
-                            controller: categoryController,
-                            decoration: InputDecoration(labelText: 'Category'),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Enter Category';
-                              }
-                            },
-                          ),
-                        ),
+                            padding: EdgeInsets.all(12),
+                            child: FutureBuilder(
+                                future: getCategory(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return DropdownButtonFormField(
+                                        items: list.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        hint: Text('category'),
+                                        onChanged: (String? value) {});
+                                  } else {
+                                    return DropdownButtonFormField(
+                                      items: list.map<DropdownMenuItem<String>>((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      hint: Text('category'),
+                                      onChanged: (String? value) {
+                                        categoryController.text = value!;
+                                      },
+                                      validator: (value) => value == null ? 'please enter category' : null,
+                                    );
+                                  }
+                                })
+                            // TextFormField(
+                            //   controller: categoryController,
+                            //   decoration: InputDecoration(labelText: 'Category'),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'Enter Category';
+                            //     }
+                            //   },
+                            // ),
+                            ),
                         Container(
                           padding: EdgeInsets.all(12),
                           child: TextFormField(
