@@ -167,11 +167,11 @@ myDrawer(BuildContext context, int selected) => Drawer(
               },
               leading: Icon(
                 Icons.logout,
-                color: selected == 5 ? Colors.black : Colors.blueGrey[500],
+                color: selected == 6 ? Colors.black : Colors.blueGrey[500],
               ),
               title: Text(
                 'L O G O U T',
-                style: TextStyle(color: selected == 5 ? Colors.black : Colors.blueGrey[500]),
+                style: TextStyle(color: selected == 6 ? Colors.black : Colors.blueGrey[500]),
               ),
             ),
           ],
@@ -675,7 +675,7 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
               String password = _passwordController.text;
               // Do something with the user's information, such as save it to a database
               // Navigator.of(context).pop();
-              createAdmin(context, firstName, lastName, username, password, email);
+              createAccount(context, mode,firstName, lastName, username, password, email);
             }
           },
         ),
@@ -684,8 +684,8 @@ class _UserInfoDialogState extends State<UserInfoDialog> {
   }
 }
 
-Future<int> createAdmin(BuildContext context, String f_name, String l_name, String username, String password, String mail) async {
-  http.Response a = await HttpHelper().createAdmin(f_name, l_name, username, password, mail);
+Future<int> createAccount(BuildContext context,String mode, String f_name, String l_name, String username, String password, String mail) async {
+  http.Response a = await HttpHelper().createAccount(mode,f_name, l_name, username, password, mail);
   // final body = jsonDecode(a.body);
   if (a.statusCode == 201) {
     showDialog(

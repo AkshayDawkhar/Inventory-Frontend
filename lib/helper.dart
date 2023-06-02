@@ -164,14 +164,15 @@ class HttpHelper {
     return json;
   }
 
-  Future<http.Response> createAdmin(String fName,String lName, String username,String password,String mail) async {
+  Future<http.Response> createAccount(String mode,String fName,String lName, String username,String password,String mail) async {
     // String f_name = 'akshayqwqw';
     // String l_name = 'dawkharqwqw';
     // String username = 'akshaydawkhar2qwqw';
     // String password = 'akshaydawkhar2qwqw';
     // String mail = 'akshay@gmail.comcom';
     // await Future.delayed(Duration(seconds: 1));
-    final url = Uri.parse('$HOSTNAME/account/admin/');
+
+    final url = mode == 'admin' ?Uri.parse('$HOSTNAME/account/admin/'):Uri.parse('$HOSTNAME/account/');
     final responce = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

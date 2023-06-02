@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/constants.dart';
@@ -6,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:inventory/helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inventory/helper.dart';
+
+List<String> list = <String>[];
 
 class DesktopCreateProductPage extends StatefulWidget {
   const DesktopCreateProductPage({super.key, required this.title});
@@ -35,6 +36,12 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
   final formKey = GlobalKey<FormState>();
   int count = 8;
 
+  getCategory() async {
+    List categories = await HttpHelper().fetchCategory();
+    list = categories.map((e) => e['category'].toString()).toList();
+    print('$list');
+  }
+
   @override
   Widget build(BuildContext context) {
     if (colorController.text.isEmpty) {
@@ -52,8 +59,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
           onPressed: () async {
             // setState(() {});
             if (formKey.currentState!.validate()) {
-              int aa = await HttpHelper()
-                  .createItem(nameController.text, categoryController.text, colorController.text, selected, selectedNumber);
+              int aa = await HttpHelper().createItem(nameController.text, categoryController.text, colorController.text, selected, selectedNumber);
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Processing Data')));
             }
           },
@@ -112,16 +118,45 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                         ),
                                       ),
                                       Container(
-                                        padding: EdgeInsets.all(12),
-                                        child: TextFormField(
-                                          controller: categoryController,
-                                          decoration: InputDecoration(labelText: 'Category'),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Enter Category';
-                                            }
-                                          },
-                                        ),
+                                          padding: EdgeInsets.all(12),
+                                          child: FutureBuilder(
+                                              future: getCategory(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return DropdownButtonFormField(
+                                                      items: list.map<DropdownMenuItem<String>>((String value) {
+                                                        return DropdownMenuItem<String>(
+                                                          value: value,
+                                                          child: Text(value),
+                                                        );
+                                                      }).toList(),
+                                                      hint: Text('category'),
+                                                      onChanged: (String? value) {});
+                                                } else {
+                                                  return DropdownButtonFormField(
+                                                    items: list.map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: value,
+                                                        child: Text(value),
+                                                      );
+                                                    }).toList(),
+                                                    hint: Text('category'),
+                                                    onChanged: (String? value) {
+                                                      categoryController.text = value!;
+                                                    },
+                                                    validator: (value) => value == null ? 'please enter category' : null,
+                                                  );
+                                                }
+                                              })
+                                        // TextFormField(
+                                        //   controller: categoryController,
+                                        //   decoration: InputDecoration(labelText: 'Category'),
+                                        //   validator: (value) {
+                                        //     if (value!.isEmpty) {
+                                        //       return 'Enter Category';
+                                        //     }
+                                        //   },
+                                        // ),
                                       ),
                                       Container(
                                         padding: EdgeInsets.all(12),
@@ -165,8 +200,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                             itemCount: selected.length,
                                             shrinkWrap: true,
                                             physics: AlwaysScrollableScrollPhysics(),
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: width < 1000 ? 2 : 4),
+                                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: width < 1000 ? 2 : 4),
                                             itemBuilder: (BuildContext context, int index) {
                                               return Padding(
                                                 padding: const EdgeInsets.all(8.0),
@@ -245,8 +279,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                         border: Border.all(width: 3, color: Colors.blueGrey),
                                                         borderRadius: BorderRadius.all(Radius.circular(12)),
                                                         image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                '${HttpHelper.HOSTNAME}/static/${selected[index]['pid']}.png'),
+                                                            image: NetworkImage('${HttpHelper.HOSTNAME}/static/${selected[index]['pid']}.png'),
                                                             fit: BoxFit.fill)),
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -256,8 +289,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                             '${selectedNumber[index]}',
                                                             softWrap: false,
                                                             overflow: TextOverflow.fade,
-                                                            style: TextStyle(
-                                                                color: Colors.green, fontSize: 50, fontWeight: FontWeight.bold),
+                                                            style: TextStyle(color: Colors.green, fontSize: 50, fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                         Container(
@@ -291,8 +323,7 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                 itemCount: select.length,
                                                 shrinkWrap: true,
                                                 physics: AlwaysScrollableScrollPhysics(),
-                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: width < 1000 ? 3 : 5),
+                                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: width < 1000 ? 3 : 5),
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return Padding(
                                                     padding: const EdgeInsets.all(8.0),
@@ -309,9 +340,9 @@ class _DesktopCreateProductPageState extends State<DesktopCreateProductPage> {
                                                         decoration: BoxDecoration(
                                                             border: Border.all(width: 3, color: Colors.red),
                                                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                                                            image:  DecorationImage(
-                                                                image: NetworkImage(
-                                                                    '${HttpHelper.HOSTNAME}/static/${snapshot.data![index]['pid']}.png'),
+                                                            image: DecorationImage(
+                                                                image:
+                                                                    NetworkImage('${HttpHelper.HOSTNAME}/static/${snapshot.data![index]['pid']}.png'),
                                                                 fit: BoxFit.fill)),
                                                         child: Text('${snapshot.data![index]['dname']}'),
                                                       ),
