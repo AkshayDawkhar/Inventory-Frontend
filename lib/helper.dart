@@ -9,11 +9,11 @@ class HttpHelper {
   Future<List> fetchItems() async {
     List<Map> items = [{}, {}];
     // Uri url = Uri.parse('$HOSTNAME/product/');
-    // final a = await http.get(url);
+    // final a = await http.get(url,headers: {'validate':'akshay'});
 
     final url = Uri.parse('$HOSTNAME/product/');
     // await Future.delayed(Duration(seconds: 1));
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     print(a.statusCode);
     final json = jsonDecode(a.body);
     return json;
@@ -31,7 +31,7 @@ class HttpHelper {
         //   "category":category
         // })
         );
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     print(a.body);
     final json = jsonDecode(a.body);
     return json;
@@ -39,7 +39,7 @@ class HttpHelper {
   Future fetchItem(String pid) async {
     // await Future.delayed(Duration(seconds: 4));
     final url = Uri.parse('$HOSTNAME/build/edit/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print(json);
     return json;
@@ -48,7 +48,7 @@ class HttpHelper {
   Future fetchItemName(String pid) async {
     // await Future.delayed(Duration(seconds: 5));
     final url = Uri.parse('$HOSTNAME/product/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print(json);
     return json;
@@ -76,7 +76,7 @@ class HttpHelper {
   Future<List> fetchRequired(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/build/required/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print(json);
     return json;
@@ -85,7 +85,7 @@ class HttpHelper {
   Future fetchItem1(String pid) async {
     // await Future.delayed(Duration(seconds: 4));
     final url = Uri.parse('$HOSTNAME/product/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print('______________-----_____________');
     print(json);
@@ -95,7 +95,7 @@ class HttpHelper {
   Future<List> fetchNeeded(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/build/needed/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print(json);
     return json;
@@ -104,7 +104,7 @@ class HttpHelper {
   Future<int> fetchMax(String pid) async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/build/$pid');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print(json);
     return json;
@@ -122,7 +122,7 @@ class HttpHelper {
   Future<List> fetchTrashProduct() async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/product/trash/');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print('trash product -----------> $json');
     return json;
@@ -149,7 +149,7 @@ class HttpHelper {
   Future<List> fetchAccount() async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/account/');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print('account -----------> $json');
     return json;
@@ -158,7 +158,7 @@ class HttpHelper {
   Future<List> fetchAdmin() async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/account/admin/');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print('admin -----------> $json');
     return json;
@@ -217,7 +217,7 @@ class HttpHelper {
   Future<List> fetchOrder() async {
     // await Future.delayed(Duration(seconds: 1));
     final url = Uri.parse('$HOSTNAME/order/');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     final json = jsonDecode(a.body);
     print('orders -----------> $json');
     return json;
@@ -274,7 +274,7 @@ class HttpHelper {
 
   Future<List> fetchCategory() async {
     final url = Uri.parse('$HOSTNAME/product/category/');
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     await Future.delayed(Duration(seconds: 5));
     final json = jsonDecode(a.body);
     print(json);
@@ -296,7 +296,7 @@ class HttpHelper {
   Future<List> fetchBuildingItems() async {
     final url = Uri.parse('$HOSTNAME/build/building');
     // await Future.delayed(Duration(seconds: 1));
-    final a = await http.get(url);
+    final a = await http.get(url,headers: {'validate':'akshay'});
     print(a.statusCode);
     print(a.body);
     final json = jsonDecode(a.body);
